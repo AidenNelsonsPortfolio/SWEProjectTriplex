@@ -1,5 +1,5 @@
 // Get a reference to the existing image element
-const image = document.querySelector('img["Assets/TriplexLogo.png"]');
+const image = document.querySelector('#main-content');
 
 // Add a click event listener to the image
 image.addEventListener('click', () => {
@@ -7,8 +7,8 @@ image.addEventListener('click', () => {
   const canvas = document.createElement('canvas');
   
   // Set the dimensions of the canvas to 400x400
-  canvas.width = 400;
-  canvas.height = 400;
+  canvas.width = 900;
+  canvas.height = 900;
   
   // Set the position of the canvas to the center of the screen
   canvas.style.position = 'fixed';
@@ -21,7 +21,7 @@ image.addEventListener('click', () => {
 
   const context = canvas.getContext('2d');
   context.font = '24px Arial';
-  context.fillStyle = 'black';
+  context.fillStyle = 'purple';
   context.textAlign = 'center';
   context.fillText('This is a pause screen', canvas.width / 2, canvas.height / 2);
 });
