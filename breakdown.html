@@ -7,6 +7,16 @@
 </head>
 <body>
 <canvas width="400" height="500" id="game"></canvas>
+<button id="play" class = "play-button">🔊</button>
+<script>
+  let play = document.getElementById("play");
+  function playMusic() {
+    let audio = new Audio("breakdown-sound.mp3");
+    audio.play();
+    audio.loop();
+  }
+  play.addEventListener("click", playMusic);
+</script>
 <script src="breakdown.js"></script>
 </body>
 </html>
