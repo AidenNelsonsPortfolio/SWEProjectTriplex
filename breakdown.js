@@ -1,6 +1,20 @@
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
 
+
+const help = document.getElementById("help-button");
+const helpPopup = document.getElementById("help-popup");
+const close = document.getElementById("close-button");
+
+help.addEventListener("click", () => {
+helpPopup.style.display = "block";
+});
+
+close.addEventListener("click", () => {
+helpPopup.style.display = "none";
+});
+
+
 // each row is 14 bricks long. the level consists of 6 blank rows then 8 rows
 // of 4 colors: red, orange, green, and yellow
 const level1 = [
