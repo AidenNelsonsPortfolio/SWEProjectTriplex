@@ -6,7 +6,38 @@
   <link rel="stylesheet" href="snake.css">
 </head>
 <body>
-<canvas width="400" height="400" id="game"></canvas>
+<canvas width="700" height="700" id="game"></canvas>
+<div>
+  <button id="help-button">?</button>
+    <div id="help-popup">
+      <p>How to play:</p>
+      <p>Move
+        <ul>
+          use the arrow keys to move a "snake" around the board
+        </ul>
+      </p>
+      <p>Food
+        <ul>
+          Snake finds food, it eats the food,
+        </ul>
+      </p>  
+      <p> End
+        <ul>
+          The game ends when the snake either moves off the screen or moves into itself.
+        </ul>
+      </p> 
+       <button id="close-button">Close</button>
+</div>
+<button id="play" class = "play-button">🔊</button>
+<script>
+  let play = document.getElementById("play");
+  function playMusic() {
+    let audio = new Audio("snake-sound.mp3");
+    audio.play();
+    audio.loop();
+  }
+  play.addEventListener("click", playMusic);
+</script>
 <script src="snake.js"></script>
 </body>
 </html>

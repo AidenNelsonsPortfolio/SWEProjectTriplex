@@ -1,6 +1,19 @@
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
 
+//help button with pop-ups
+const help = document.getElementById("help-button");
+const helpPopup = document.getElementById("help-popup");
+const close = document.getElementById("close-button");
+
+help.addEventListener("click", () => {
+helpPopup.style.display = "block";
+});
+
+close.addEventListener("click", () => {
+helpPopup.style.display = "none";
+});
+
 // the canvas width & height, snake x & y, and the apple x & y, all need to be a multiples of the grid size in order for collision detection to work
 // (e.g. 16 * 25 = 400)
 var grid = 16;

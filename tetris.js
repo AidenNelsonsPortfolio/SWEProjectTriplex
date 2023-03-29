@@ -2,6 +2,19 @@
 
 // get a random integer between the range of [min,max]
 // @see https://stackoverflow.com/a/1527820/2124254
+
+const help = document.getElementById("help-button");
+const helpPopup = document.getElementById("help-popup");
+const close = document.getElementById("close-button");
+
+help.addEventListener("click", () => {
+  helpPopup.style.display = "block";
+  });
+
+  close.addEventListener("click", () => {
+  helpPopup.style.display = "none";
+  });
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
