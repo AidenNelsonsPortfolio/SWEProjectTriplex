@@ -6,6 +6,13 @@
   <link rel="stylesheet" href="snake.css">
 </head>
 <body>
+
+<header class="logo">
+  <a href="#" id="logo-button">
+    <img class="logo-image" src="Assets/TriplexLogo.png" alt="Triplex Logo">
+  </a>
+</header>
+
 <canvas width="320" height="640" id="game"></canvas>
 <button id="help-button">?</button>
 <div id="help-popup">
@@ -24,8 +31,20 @@
     <p> Hard Drop 
       <ul>When the Space key is pressed, the piece should be placed as far down as possible.</ul>
     </p>  
+    <p> Pause
+      <ul>
+        Press the escape key to pause the game
+      </ul>
+    </p>
     <button id="close-button">Close</button>
   </div>
+  <div id="pause-menu">
+    <p>The Game Has Been Paused!</p>
+    
+    <button id="resume-button">Click To Resume Game</button>
+    <button id="exit-button">Click To Exit To Main Menu</button>
+  </div>
+
 <button id="play" class = "play-button">🔊</button>
 <script>
   let play = document.getElementById("play");

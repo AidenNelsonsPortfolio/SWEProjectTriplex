@@ -15,6 +15,41 @@ help.addEventListener("click", () => {
   helpPopup.style.display = "none";
   });
 
+//click the logo to exit to main menu
+const logobutton = document.getElementById("logo-button");
+logobutton.addEventListener('click', function() {
+  window.location.href = "index.html";
+});
+
+const pausemenu = document.getElementById("pause-menu");
+const resume = document.getElementById("resume-button");
+const exit = document.getElementById("exit-button");
+let paused = false;
+
+// bring up pause menu
+document.addEventListener('keydown', function(e) {
+  // escape key
+  if (e.which === 27) {
+    pausemenu.style.display = "block";
+
+    //stop gameplay
+    paused = true;
+  }
+});
+ //resume button closes pause menu
+resume.addEventListener("click", () => {
+  pausemenu.style.display = "none";
+  
+  //resume gameplay
+  paused = false;
+  requestAnimationFrame(loop);
+});
+ //exit button goes back to main menu
+exit.addEventListener("click", () => {
+  window.location.href = "index.html";
+});
+
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -216,7 +251,9 @@ function getRandomInt(min, max) {
   
   // game loop
   function loop() {
-    rAF = requestAnimationFrame(loop);
+    if (paused === false) {
+      rAF = requestAnimationFrame(loop);
+    }
     context.clearRect(0,0,canvas.width,canvas.height);
   
     // draw the playfield
@@ -259,6 +296,21 @@ function getRandomInt(min, max) {
         }
       }
     }
+
+    // pause the game
+    document.addEventListener('keydown', function(e) {
+      // escape key
+      if (e.which === 27) {
+        //stop gameplay
+        paused = true;
+      }
+    });
+
+    // resume button closes pause menu
+    resume.addEventListener("click", () => {  
+      //resume gameplay
+      paused = false;
+    });
   }
   
   // listen to keyboard events to move the active tetromino
