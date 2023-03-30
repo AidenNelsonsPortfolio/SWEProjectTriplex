@@ -2,101 +2,59 @@
 <html>
 <head>
 	<title>Triplex</title>
-    <link rel="stylesheet" type="text/css" href="home.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="Assets/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
 </head>
 <body>
 	<header class="logo">
-        <img class="logo-image" src="Assets/TriplexLogo.png" alt="Triplex Logo">
+        <img id="home-button" class="logo-image" src="Images/TriplexLogo.png" alt="Triplex Logo">
 	</header>
+
+    <button id="help-button">?</button>
+    <div id="help-popup">
+        <div id="help-popup-text"></div>
+        <button id="close-help-button">Close</button>
+    </div>
+
+    <button id="audio-play-button">&#x1f507;</button>
+
+    <canvas width="700px" height="700px" id="game"></canvas>
+
+    <script defer type="module" src="Controllers/GUIController.js"></script>
+
+    <div id="pause-menu">
+        <p class="reverse-gradient-text">The Game Has Been Paused!</p>
+        <button id="resume-button">Click To Resume Game</button>
+        <button id="exit-button">Click To Exit Game</button>
+    </div>
+
 	<div class="main-content" id="main-content">
+        
+
 		<div class="hero">
-            <img src="Assets/TriplexLogo.png" alt="Triplex Logo" height="60%">
+            <img src="Images/TriplexLogo.png" alt="Triplex Logo" height="60%">
 			<div class="hero-text reverse-gradient-text"><b>Triplex</b></div>
             <div class="typewriter">
 			    <p class="hero-sub-text">Empowering women, one <span class="reverse-gradient-text">game</span> at a time.</p>
             </div>
-            <button id="help-button">?</button>
-            <div id="help-popup">
-                <p>Help:</p>
-                <p>In order to start click on the game you would like to play </p>
-                <p>You could also login with your google account or create a new account</p>
-                <p>Enjoy Triplexing!</p>
                 <!-- <ul>
                   <li>In order to start click on the game you would like to play</li>
                   <li>You could also login with your google account or create a new account</li>
                   <li>Enjoy Triplexing</li>
                 </ul> -->
-                <button id="close-button">Close</button>
-              </div>
-            <style>
-                #help-button {
-                    background-color: #af4caa;
-                    border: none;
-                    color: white;
-                    padding: 12px 12px;
-                    text-align: right;
-                    text-decoration: none;
-                    display: inline-block;
-                    font-size: 16px;
-                    margin: 4px 2px;
-                    cursor: pointer;
-                    position: absolute; 
-                    top: 1rem;
-                    right: 1rem;
-                }
-                #help-popup {
-                    display: none;
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    padding: 20px;
-                    background-color: white;
-                    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-                    }
-
-                #close-button {
-                    background-color: #ae76bd;
-                    color: white;
-                    padding: 8px 16px;
-                    border: none;
-                    cursor: pointer;
-                    border-radius: 4px;
-                    float: right;
-                }
-            </style>
-            <script>
-            // const help = document.querySelector("#help");
-            const help = document.getElementById("help-button");
-            const helpPopup = document.getElementById("help-popup");
-            const close = document.getElementById("close-button");
-
-            help.addEventListener("click", () => {
-            helpPopup.style.display = "block";
-            });
-
-            close.addEventListener("click", () => {
-            helpPopup.style.display = "none";
-            });
-
-            // help.addEventListener("click", function() {
-            //       alert("Click the following games to start a new game");
-            // });
-            </script>
 		</div>
 		<div class="button-wrapper">
 			<div class="game-button" id="snake-button">
-                <img src="Assets/SnakeLogo.png" alt="Snake Logo" width="70%" height="80%">
+                <img src="Images/SnakeLogo.png" alt="Snake Logo" width="70%" height="80%">
                 <div class=" game-text reverse-gradient-text">Snake</div>
             </div>
             <div class="game-button" id="tetris-button">
-                <img src="Assets/TetrisLogo.png" alt="Tetris Logo" width="70%" height="70%">
+                <img src="Images/TetrisLogo.png" alt="Tetris Logo" width="70%" height="70%">
                 <div class=" game-text reverse-gradient-text">Tetris</div>
             </div>
             <div class="game-button" id="breakout-button">
-                <img src="Assets/BreakoutLogo.png" alt="Breakout Logo" width="70%" height="80%">
+                <img src="Images/BreakoutLogo.png" alt="Breakout Logo" width="70%" height="80%">
                 <div class=" game-text reverse-gradient-text">Breakout</div>
             </div>
 		</div>
