@@ -14,6 +14,41 @@ close.addEventListener("click", () => {
 helpPopup.style.display = "none";
 });
 
+//click the logo to exit to main menu
+const logobutton = document.getElementById("logo-button");
+logobutton.addEventListener('click', function() {
+  window.location.href = "index.html";
+});
+
+const pausemenu = document.getElementById("pause-menu");
+const resume = document.getElementById("resume-button");
+const exit = document.getElementById("exit-button");
+let paused = false;
+
+// bring up pause menu
+document.addEventListener('keydown', function(e) {
+  // escape key
+  if (e.which === 27) {
+    pausemenu.style.display = "block";
+
+    //stop gameplay
+    paused = true;
+  }
+ });
+//resume button closes pause menu
+resume.addEventListener("click", () => {
+  pausemenu.style.display = "none";
+
+  //resume gameplay
+  paused = false;
+  requestAnimationFrame(loop);
+});
+//exit button goes back to main menu
+exit.addEventListener("click", () => {
+  window.location.href = "index.html";
+});
+
+
 // the canvas width & height, snake x & y, and the apple x & y, all need to be a multiples of the grid size in order for collision detection to work
 // (e.g. 16 * 25 = 400)
 var grid = 16;
@@ -46,7 +81,9 @@ function getRandomInt(min, max) {
 
 // game loop
 function loop() {
-  requestAnimationFrame(loop);
+  if (paused === false) {
+    requestAnimationFrame(loop);
+  }
 
   // slow game loop to 15 fps instead of 60 (60/15 = 4)
   if (++count < 4) {
@@ -120,6 +157,21 @@ function loop() {
         apple.y = getRandomInt(0, 25) * grid;
       }
     }
+  });
+
+  // pause the game
+  document.addEventListener('keydown', function(e) {
+    // escape key
+    if (e.which === 27) {
+      //stop gameplay
+      paused = true;
+    }
+  });
+
+  // resume button closes pause menu
+  resume.addEventListener("click", () => {  
+    //resume gameplay
+    paused = false;
   });
 }
 

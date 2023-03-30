@@ -6,6 +6,11 @@
   <link rel="stylesheet" href="snake.css">
 </head>
 <body>
+  <header class="logo">
+    <a href="#" id="logo-button">
+      <img class="logo-image" src="Assets/TriplexLogo.png" alt="Triplex Logo">
+    </a>
+  </header>
 <canvas width="700" height="700" id="game"></canvas>
 <div>
   <button id="help-button">?</button>
@@ -26,8 +31,21 @@
           The game ends when the snake either moves off the screen or moves into itself.
         </ul>
       </p> 
+      <p> Pause
+        <ul>
+          Press the escape key to pause the game
+        </ul>
+      </p> 
        <button id="close-button">Close</button>
 </div>
+
+<div id="pause-menu">
+  <p>The Game Has Been Paused!</p>
+  
+    <button id="resume-button">Click To Resume Game</button>
+    <button id="exit-button">Click To Exit To Main Menu</button>
+</div>
+
 <button id="play" class = "play-button">🔊</button>
 <script>
   let play = document.getElementById("play");

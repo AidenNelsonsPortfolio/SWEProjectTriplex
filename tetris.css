@@ -1,3 +1,37 @@
+.logo-image:hover{
+  background-color: rgba(255, 255, 255, 0.774);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+
+  transform: scale(1.05);
+  transition: box-shadow 0.5s ease-in-out, transform 0.5s ease-in-out, background-color 0.5s ease-in-out, backdrop-filter 0.5s ease-in-out;
+
+  -webkit-backdrop-filter: blur(5px);
+  -webkit-transform: scale(1.05);
+
+  cursor: pointer;
+}
+.logo{
+  border: none;
+  padding: 12px 12px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  position: absolute; 
+  top: 1rem;
+  left: 1rem;
+}
+.logo-image{
+  position: relative;
+  overflow: hidden;
+  width: 100px;
+  height: 100px;
+}
+
+
 html, body {
     height: 100%;
     margin: 0;
@@ -62,3 +96,38 @@ html, body {
     border-radius: 4px;
     float: right;
 }
+
+
+#pause-menu {
+  display: none;
+  font-size: 60px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -25%);
+  padding: 20px;
+  background-color: rgb(212, 0, 245);
+  box-shadow: 0px 0px 10px rgb(194, 141, 197);
+  }
+
+  #resume-button {
+    font-size: 24px;
+    background-color: #9344a9;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    float: left;
+  }
+
+  #exit-button {
+    font-size: 24px;
+    background-color: #9344a9;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    float: right;
+  }

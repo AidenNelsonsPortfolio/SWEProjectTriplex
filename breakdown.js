@@ -14,6 +14,40 @@ close.addEventListener("click", () => {
 helpPopup.style.display = "none";
 });
 
+//click the logo to exit to main menu
+const logobutton = document.getElementById("logo-button");
+logobutton.addEventListener('click', function() {
+  window.location.href = "index.html";
+});
+
+const pausemenu = document.getElementById("pause-menu");
+const resume = document.getElementById("resume-button");
+const exit = document.getElementById("exit-button");
+let paused = false;
+
+// bring up pause menu
+document.addEventListener('keydown', function(e) {
+  // escape key
+  if (e.which === 27) {
+    pausemenu.style.display = "block";
+
+    //stop gameplay
+    paused = true;
+  }
+ });
+ //resume button closes pause menu
+ resume.addEventListener("click", () => {
+  pausemenu.style.display = "none";
+  
+  //resume gameplay
+  paused = false;
+  requestAnimationFrame(loop);
+ });
+ //exit button goes back to main menu
+ exit.addEventListener("click", () => {
+  window.location.href = "index.html";
+ });
+
 
 // each row is 14 bricks long. the level consists of 6 blank rows then 8 rows
 // of 4 colors: red, orange, green, and yellow
@@ -105,7 +139,9 @@ function collides(obj1, obj2) {
 
 // game loop
 function loop() {
-  requestAnimationFrame(loop);
+  if (paused === false) {
+    requestAnimationFrame(loop);
+  }
   context.clearRect(0,0,canvas.width,canvas.height);
 
   // move paddle by it's velocity
@@ -201,7 +237,24 @@ function loop() {
   // draw paddle
   context.fillStyle = 'cyan';
   context.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
+
+
+  // pause the game
+  document.addEventListener('keydown', function(e) {
+    // escape key
+    if (e.which === 27) {
+      //stop gameplay
+      paused = true;
+    }
+    });
+
+  // resume button closes pause menu
+  resume.addEventListener("click", () => {  
+    //resume gameplay
+    paused = false;
+  });
 }
+
 
 // listen to keyboard events to move the paddle
 document.addEventListener('keydown', function(e) {
@@ -232,3 +285,5 @@ document.addEventListener('keyup', function(e) {
 
 // start the game
 requestAnimationFrame(loop);
+
+

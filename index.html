@@ -8,7 +8,9 @@
 </head>
 <body>
 	<header class="logo">
-        <img class="logo-image" src="Assets/TriplexLogo.png" alt="Triplex Logo">
+        <a href="#" id="logo-button">
+            <img class="logo-image" src="Assets/TriplexLogo.png" alt="Triplex Logo">
+        </a>
 	</header>
 	<div class="main-content" id="main-content">
 		<div class="hero">
@@ -84,6 +86,13 @@
             // help.addEventListener("click", function() {
             //       alert("Click the following games to start a new game");
             // });
+
+            //click logo to go back to main menu
+            const logobutton = document.getElementById("logo-button");
+            logobutton.addEventListener('click', function() {
+                window.location.href = "index.html";
+            });
+
             </script>
 		</div>
 		<div class="button-wrapper">
