@@ -5,28 +5,36 @@ const closeButton = document.getElementById("close-help-button");
 const homeButton = document.getElementById("home-button");
 
 
+//When help button is clicked, display the help popup
 helpButton.addEventListener("click", () => {
     helpPopup.style.display = "flex";
 });
 
+//When close button is clicked, hide the help popup
 closeButton.addEventListener("click", () => {
     helpPopup.style.display = "none";
 });
 
+//When home button is clicked, hide the current help popup and load the home help popup (for future use)
 homeButton.addEventListener("click", () => {
     helpPopup.style.display = "none";
     loadHelpPopup("home");
 });
 
+
+//Load the help popup for the game that is currently being played, called by GUIController.js
 export function loadHelpPopup(screenName){
     helpPopup.style.display = "none";
     helpPopupText.innerHTML = "";
 
+    //Create elements for the help popup
     const h2 = document.createElement('h2');
     h2.classList = "reverse-gradient-text";
     const p1 = document.createElement('p');
     const p2 = document.createElement('p');
     const p3 = document.createElement('p');
+
+    //Add text to the help popup based on the game that is currently being played
 
     if(screenName == "home"){
         h2.textContent = 'Welcome to Triplex';
@@ -56,6 +64,7 @@ export function loadHelpPopup(screenName){
         p3.textContent = 'Break all the bricks to win!';
     }
 
+    //Append the elements to the help popup
     helpPopupText.appendChild(h2);
     helpPopupText.appendChild(p1);
     helpPopupText.appendChild(p2);

@@ -7,8 +7,12 @@ const helpButton = document.getElementById("help-button");
 const homeButton = document.getElementById("home-button");
 
 var paused = false;
+
+//Will be set to the loop function of the game
 var loopFunction = null;
 
+
+//Pause game when escape key is pressed
 
 function pauseMenu(e){
     // escape key
@@ -27,6 +31,7 @@ function pauseMenu(e){
     }
 }
 
+//Resume game when resume button is clicked
 function resumeLoop(){
     //close pause menu
     pausemenu.style.display = "none";
@@ -39,12 +44,13 @@ function resumeLoop(){
     requestAnimationFrame(loopFunction);
 }
 
+//Exit game when exit button is clicked
 function exitGame(){
     //Simulate click to close out previous game
     homeButton.click();
 }
 
-
+//Load pause menu and add event listeners to buttons, called by each game
 export function loadPauseMenu(loop){
     loopFunction = loop;
 
@@ -58,11 +64,12 @@ export function loadPauseMenu(loop){
     exit.addEventListener("click", exitGame);
 }
 
+//Remove event listeners and close pause menu, called by each game when game is over or home button is clicked
 export function resetPauseMenu(){
     //remove event listener for escape key
     document.removeEventListener('keydown', pauseMenu);
 
-    //close pause menu
+    //close/hide pause menu
     pausemenu.style.display = "none";
     paused = false;
 
@@ -74,6 +81,7 @@ export function resetPauseMenu(){
     exit.removeEventListener("click", exitGame);
 }
 
+//Used by game loop to check if game is paused (to stop game loop)
 export function isPaused(){
     return paused;
 }

@@ -9,31 +9,40 @@ export function loadTetris(){
   const homeButton = document.getElementById("home-button");
   const mainContent = document.getElementById("main-content");
   
-  //Make and then load the audio
+  //Make and then load the audio for tetris (from AudioController.js)
   const audio = new Audio("../Audio/tetris-sound.mp3");
   loadAudio(audio);
 
-  //Load the pause menu
+  //Load the pause menu and attach game's loop to it (to be paused) (from PauseMenuController.js)
   loadPauseMenu(loop);
 
+  //When the home button is clicked, stop the game loop, clear the canvas, stop the audio, reset the pause menu, and return to the home page
   function returnHome(){
+    //Stop game loop, clear canvas
     cancelAnimationFrame(rAF);
     context.clearRect(0,0,canvas.width,canvas.height);
 
-    //Stop audio
+    //Stop audio (from AudioController.js)
     stopAudio(audio);
 
-    //Reset pause menu
+    //Reset pause menu (from PauseMenuController.js)
     resetPauseMenu();
 
+    //Make home display visible, canvas invisible
     mainContent.style.display="flex";
     canvas.style.display="none";
 
+    //Prevent multiple event listeners from being added
     homeButton.removeEventListener("click", returnHome);
   }
 
-  
+  //When the home button is clicked, return to the home page
   homeButton.addEventListener("click", returnHome);
+
+
+  /////////////////////////////////////////////////////////////////
+  //GAME CODE STARTS HERE /////////////////////////////////////////
+
 
   function getRandomInt(min, max) {
       min = Math.ceil(min);

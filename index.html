@@ -11,38 +11,39 @@
         <img id="home-button" class="logo-image" src="Images/TriplexLogo.png" alt="Triplex Logo">
 	</header>
 
+    <!--Help button to control visibility of help modal.-->
     <button id="help-button">?</button>
+
+    <!--Help popup, shows game specific controls.-->
     <div id="help-popup">
         <div id="help-popup-text"></div>
         <button id="close-help-button">Close</button>
     </div>
 
+    <!--Audio button, available in game, hidden on main page.-->
     <button id="audio-play-button">&#x1f507;</button>
 
+    <!--Canvas for all games to be played in, hidden by default-->
     <canvas width="700px" height="700px" id="game"></canvas>
 
+    <!--Driver controller for GUI (handles games being clicked on, started)-->
     <script defer type="module" src="Controllers/GUIController.js"></script>
 
+    <!--Pause menu below, hidden to start with, accessible via escape key in game-->
     <div id="pause-menu">
         <p class="reverse-gradient-text">The Game Has Been Paused!</p>
         <button id="resume-button">Click To Resume Game</button>
         <button id="exit-button">Click To Exit Game</button>
     </div>
 
+    <!--Main page html-->
 	<div class="main-content" id="main-content">
-        
-
 		<div class="hero">
             <img src="Images/TriplexLogo.png" alt="Triplex Logo" height="60%">
 			<div class="hero-text reverse-gradient-text"><b>Triplex</b></div>
             <div class="typewriter">
 			    <p class="hero-sub-text">Empowering women, one <span class="reverse-gradient-text">game</span> at a time.</p>
             </div>
-                <!-- <ul>
-                  <li>In order to start click on the game you would like to play</li>
-                  <li>You could also login with your google account or create a new account</li>
-                  <li>Enjoy Triplexing</li>
-                </ul> -->
 		</div>
 		<div class="button-wrapper">
 			<div class="game-button" id="snake-button">

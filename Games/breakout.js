@@ -5,35 +5,49 @@ export function loadBreakout(){
   const canvas = document.getElementById('game');
   const context = canvas.getContext('2d');
 
-
   const homeButton = document.getElementById("home-button");
   const mainContent = document.getElementById("main-content");
 
-  //Make and then load the audio
+
+  //Make and then load the breakout audio (from AudioController.js)
   const audio = new Audio("../Audio/breakout-sound.mp3");
   loadAudio(audio);
 
-  //Load the pause menu
+  //Load the pause menu, attach game's loop to it (to be paused) (from PauseMenuController.js)
   loadPauseMenu(loop);
 
+
+  //When the home button is clicked, stop the game loop, clear the canvas, stop the audio, reset the pause menu, and return to the home page
   function returnHome(){
+
+    //Stop game loop, clear canvas
     cancelAnimationFrame(id);
     context.clearRect(0,0,canvas.width,canvas.height);
 
-    //Stop audio
+    //Stop audio (from AudioController.js)
     stopAudio(audio);
 
-    //Reset pause menu
+    //Reset pause menu (from PauseMenuController.js)
     resetPauseMenu();
 
+    //Make home display visible, canvas invisible
     mainContent.style.display="flex";
     canvas.style.display="none";
 
+    //Prevent multiple event listeners from being added
     homeButton.removeEventListener("click", returnHome);
   }
 
+  //When the home button is clicked, return to the home page
   homeButton.addEventListener("click", returnHome);
   
+
+
+  /////////////////////////////////////////////////////////////////
+  //GAME CODE STARTS HERE /////////////////////////////////////////
+
+
+
   // each row is 14 bricks long. the level consists of 3 blank rows then 8 rows
   // of 4 colors: red, orange, green, and yellow
   const level1 = [
@@ -60,6 +74,8 @@ export function loadBreakout(){
 
   // use a 2px gap between each brick
   const brickGap = 2;
+
+  // calculate the brick width and height based on the canvas width and height
   const brickWidth = Math.floor((canvas.width-24-28)/14);
   const brickHeight = Math.floor(brickWidth/3);
 
