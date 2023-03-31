@@ -1,5 +1,6 @@
 import { loadAudio, stopAudio } from "../Controllers/AudioController.js";
 import { isPaused, loadPauseMenu, resetPauseMenu } from "../Controllers/PauseMenuController.js";
+import { loadHelpPopup } from "../Controllers/HelpPopupController.js";
 
 export function loadSnake(){
   var canvas = document.getElementById('game');
@@ -16,6 +17,8 @@ export function loadSnake(){
   //Load the pause menu and attach game's loop to it (to be paused) (from PauseMenuController.js)
   loadPauseMenu(loop);
 
+  //Load the help popup for snake (from HelpPopupController.js)
+  loadHelpPopup("snake");
 
   //When the home button is clicked, stop the game loop, clear the canvas, stop the audio, reset the pause menu, and return to the home page
   function returnHome(){

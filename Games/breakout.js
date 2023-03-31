@@ -1,5 +1,6 @@
 import { stopAudio, loadAudio } from "../Controllers/AudioController.js";
 import { isPaused, loadPauseMenu, resetPauseMenu } from "../Controllers/PauseMenuController.js";
+import { loadHelpPopup } from "../Controllers/HelpPopupController.js";
 
 export function loadBreakout(){
   const canvas = document.getElementById('game');
@@ -16,6 +17,8 @@ export function loadBreakout(){
   //Load the pause menu, attach game's loop to it (to be paused) (from PauseMenuController.js)
   loadPauseMenu(loop);
 
+  //Load the help popup for breakout (from HelpPopupController.js)
+  loadHelpPopup("breakout");
 
   //When the home button is clicked, stop the game loop, clear the canvas, stop the audio, reset the pause menu, and return to the home page
   function returnHome(){

@@ -28,9 +28,6 @@ function playSnake(){
 
     mainContent.style.display="none";
     
-    //Load help popup for snake, from HelpPopupController.js
-    loadHelpPopup("snake");
-    
     //Load snake game (and audio, pause menu), from snake.js
     loadSnake();
 }
@@ -42,10 +39,7 @@ function playTetris(){
     game.style.height="90vh";
     game.style.width="45vh";
 
-    mainContent.style.display="none";
-
-    //Load help popup for tetris, from HelpPopupController.js
-    loadHelpPopup("tetris");
+    mainContent.style.display="none";    
 
     //Load tetris game (and audio, pause menu), from tetris.js
     loadTetris();
@@ -59,9 +53,6 @@ function playBreakout(){
     game.style.height="90vh";
 
     mainContent.style.display="none";
-
-    //Load help popup for breakout, from HelpPopupController.js
-    loadHelpPopup("breakout");
 
     //Load breakout game (and audio, pause menu), from breakout.js
     loadBreakout();

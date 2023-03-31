@@ -1,5 +1,6 @@
 import { loadAudio, stopAudio } from "../Controllers/AudioController.js";
 import { isPaused, loadPauseMenu, resetPauseMenu } from "../Controllers/PauseMenuController.js";
+import { loadHelpPopup } from "../Controllers/HelpPopupController.js";
 // https://tetris.fandom.com/wiki/Tetris_Guideline
 
 // get a random integer between the range of [min,max]
@@ -15,6 +16,9 @@ export function loadTetris(){
 
   //Load the pause menu and attach game's loop to it (to be paused) (from PauseMenuController.js)
   loadPauseMenu(loop);
+
+  //Load the help menu for tetris (from HelpPopupController.js)
+  loadHelpPopup("tetris");
 
   //When the home button is clicked, stop the game loop, clear the canvas, stop the audio, reset the pause menu, and return to the home page
   function returnHome(){
