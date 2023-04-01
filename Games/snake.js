@@ -32,6 +32,9 @@ export function loadSnake(){
     //Reset pause menu (from PauseMenuController.js)
     resetPauseMenu();
 
+    //Reset help popup (from HelpPopupController.js)
+    loadHelpPopup("home");
+
     //Make home display visible, canvas invisible
     mainContent.style.display="flex";
     canvas.style.display="none";
