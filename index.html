@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Triplex</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="Images/favicon.ico">
+</head>
+<body>
+	<header class="logo">
+        <img id="home-button" class="logo-image" src="Images/TriplexLogo.png" alt="Triplex Logo">
+	</header>
+
+    <!--Help button to control visibility of help modal.-->
+    <button id="help-button">?</button>
+
+    <!--Help popup, shows game specific controls.-->
+    <div id="help-popup">
+        <div id="help-popup-text"></div>
+        <button id="close-help-button">Close</button>
+    </div>
+
+    <!--Audio button, available in game, hidden on main page.-->
+    <button id="audio-play-button">&#x1f507;</button>
+
+    <!--Canvas for all games to be played in, hidden by default-->
+    <canvas width="700px" height="700px" id="game"></canvas>
+
+    <!--Driver controller for GUI (handles games being clicked on, started)-->
+    <script defer type="module" src="Controllers/GUIController.js"></script>
+
+    <!--Pause menu below, hidden to start with, accessible via escape key in game-->
+    <div id="pause-menu">
+        <p class="reverse-gradient-text">The Game Has Been Paused!</p>
+        <button id="resume-button">Click To Resume Game</button>
+        <button id="exit-button">Click To Exit Game</button>
+    </div>
+
+    <!--Main page html-->
+	<div class="main-content" id="main-content">
+		<div class="hero">
+            <img src="Images/TriplexLogo.png" alt="Triplex Logo" height="60%">
+			<div class="hero-text reverse-gradient-text"><b>Triplex</b></div>
+            <div class="typewriter">
+			    <p class="hero-sub-text">Empowering women, one <span class="reverse-gradient-text">game</span> at a time.</p>
+            </div>
+		</div>
+		<div class="button-wrapper">
+			<div class="game-button" id="snake-button">
+                <img src="Images/SnakeLogo.png" alt="Snake Logo" width="70%" height="80%">
+                <div class=" game-text reverse-gradient-text">Snake</div>
+            </div>
+            <div class="game-button" id="tetris-button">
+                <img src="Images/TetrisLogo.png" alt="Tetris Logo" width="70%" height="70%">
+                <div class=" game-text reverse-gradient-text">Tetris</div>
+            </div>
+            <div class="game-button" id="breakout-button">
+                <img src="Images/BreakoutLogo.png" alt="Breakout Logo" width="70%" height="80%">
+                <div class=" game-text reverse-gradient-text">Breakout</div>
+            </div>
+		</div>
+	</div>
+</body>
+</html>
