@@ -11,7 +11,7 @@ export function loadBreakout(){
 
 
   //Make and then load the breakout audio (from AudioController.js)
-  const audio = new Audio("../Audio/breakout-sound.mp3");
+  const audio = new Audio("/triplex.github.io/Audio/breakout-sound.mp3");
   loadAudio(audio);
 
   //Load the pause menu, attach game's loop to it (to be paused) (from PauseMenuController.js)
