@@ -312,7 +312,7 @@ header {
 #egg-button {
     display:flex;
 
-    position: absolute;
+    position: relative;
     top: 2rem;
     left: 2rem;
     
