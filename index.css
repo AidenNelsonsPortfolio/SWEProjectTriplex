@@ -230,6 +230,12 @@ header {
     cursor: pointer;
     border-radius: 4px;
     float: left;
+
+    transition: all 0.5s ease-in-out;
+}
+
+#close-help-button:hover{
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 #audio-play-button{
@@ -296,6 +302,12 @@ header {
     cursor: pointer;
     border-radius: 4px;
     float: left;
+
+    transition: all 0.5s ease-in-out;
+}
+
+#resume-button:hover{
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
 }
   
 #exit-button {
@@ -307,25 +319,34 @@ header {
     cursor: pointer;
     border-radius: 4px;
     float: right;
+
+    transition: all 0.5s ease-in-out;
 }
   
+#exit-button:hover{
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+}
+
 #egg-button {
     display:flex;
+    align-items: center;
+    justify-content: center;
 
-    position: relative;
-    top: 2rem;
-    left: 2rem;
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
     
     width: 2rem;
     height: 2rem;
     
     font-size: 10px;
-    background-color: #9344a9;
-    color: white;
+    background: transparent;
     padding: 2px 4px;
     border: none;
     cursor: pointer;
-    border-radius: 2px;
+    border-radius: 7px;
+
+    transition: all 0.5s ease-in-out;
 }
 
 #egg-button:hover{
@@ -339,35 +360,41 @@ header {
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 20px;
+    padding: 10px;
 
     background-color: rgba(255, 255, 255, 0.95); /* set a semi-transparent white background */
     backdrop-filter: blur(10px); /* apply a blur effect */
     opacity: 0.95; /* adjust opacity as desired */
 
-    box-shadow: 0px 0px 10px white;
+    box-shadow: 0px 0px 10px gray;
 
     color: black;
-    z-index: 1000;
+    z-index: 1001;
 }
 
 #ee-popup-text {
     font-family: 'Roboto', sans-serif;
     font-size: 1.25rem;
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 #close-ee-button {
     font-size: 24px;
     background-color: #9344a9;
     color: white;
-    padding: 8px 16px;
+    padding: 8px 8px;
     border: none;
     cursor: pointer;
     border-radius: 4px;
     float: left;
+
+    transition: all 0.5s ease-in-out;
+}
+
+#close-ee-button:hover {
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
 }
