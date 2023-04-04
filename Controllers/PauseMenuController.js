@@ -5,6 +5,9 @@ const exit = document.getElementById("exit-button");
 const helpPopup = document.getElementById("help-popup");
 const helpButton = document.getElementById("help-button");
 const homeButton = document.getElementById("home-button");
+const EE = document.getElementById("egg-button");
+const EEPopup = document.getElementById("ee-popup");
+const EEClose = document.getElementById("close-ee-button");
 
 var paused = false;
 
@@ -62,6 +65,16 @@ export function loadPauseMenu(loop){
 
     //restart button restarts game
     exit.addEventListener("click", exitGame);
+
+    //add event listener for Easter Egg button
+    EE.addEventListener("click", () => {
+        EEPopup.style.dislpay = "flex";
+    });
+
+    //add event listener to close EE button
+    EEClose.addEventListener("click", () => {
+        EEPopup.style.display = "none";
+    });
 }
 
 //Remove event listeners and close pause menu, called by each game when game is over or home button is clicked
