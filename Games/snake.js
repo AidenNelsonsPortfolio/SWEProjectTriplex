@@ -10,7 +10,7 @@ export function loadSnake(){
 
 
   //Make and then load the audio for snake (from AudioController.js)
-  const audio = new Audio("../Audio/snake-sound.mp3");
+  const audio = new Audio("/triplex.github.io/Audio/snake-sound.mp3");
   loadAudio(audio);
 
 

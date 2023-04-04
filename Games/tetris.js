@@ -11,7 +11,7 @@ export function loadTetris(){
   const mainContent = document.getElementById("main-content");
   
   //Make and then load the audio for tetris (from AudioController.js)
-  const audio = new Audio("../Audio/tetris-sound.mp3");
+  const audio = new Audio("/triplex.github.io/Audio/tetris-sound.mp3");
   loadAudio(audio);
 
   //Load the pause menu and attach game's loop to it (to be paused) (from PauseMenuController.js)
