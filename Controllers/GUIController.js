@@ -27,7 +27,6 @@ function playSnake(){
     game.style.width="90vh";
     game.style.backgroundColor = "rgb(174,198,207)";
     game.style.color = "black";
-
     mainContent.style.display="none";
     
     //Load snake game (and audio, pause menu), from snake.js
@@ -40,10 +39,24 @@ function playTetris(){
     game.style.display="block";
     game.style.height="90vh";
     game.style.width="45vh";
-    game.style.backgroundColor = "rgb(248, 200, 220)";
     game.style.color = "black";
+    mainContent.style.display="none";  
+    // Initial color values, it starts of with light pink and increments the rgb values
+    let r = 189;
+    let g = 153;
+    let b = 194;
+    let increment = 10;
 
-    mainContent.style.display="none";    
+    // Set interval to update the background color every 15 seconds
+    setInterval(function() {
+        // Update color values with a random increment
+        r = Math.min(Math.max(r + (Math.random() * increment * 2) - increment, 0), 255);
+        g = Math.min(Math.max(g + (Math.random() * increment * 2) - increment, 0), 255);
+        b = Math.min(Math.max(b + (Math.random() * increment * 2) - increment, 0), 255);
+
+        // Set the updated color value
+        game.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+    }, 15000);  
 
     //Load tetris game (and audio, pause menu), from tetris.js
     loadTetris();
