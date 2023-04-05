@@ -40,7 +40,7 @@ function playTetris(){
     game.style.display="block";
     game.style.height="90vh";
     game.style.width="45vh";
-    game.style.backgroundColor = "rgb(174,198,207)";
+    game.style.backgroundColor = "rgb(248, 200, 220)";
     game.style.color = "black";
 
     mainContent.style.display="none";    
