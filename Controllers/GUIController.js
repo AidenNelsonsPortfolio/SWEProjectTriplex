@@ -25,7 +25,7 @@ function playSnake(){
     game.style.display="block";
     game.style.height="90vh";
     game.style.width="90vh";
-    game.style.backgroundColor = "rgb(0, 191, 255)";
+    game.style.backgroundColor = "rgb(174,198,207)";
     game.style.color = "black";
 
     mainContent.style.display="none";
@@ -40,6 +40,8 @@ function playTetris(){
     game.style.display="block";
     game.style.height="90vh";
     game.style.width="45vh";
+    game.style.backgroundColor = "rgb(174,198,207)";
+    game.style.color = "black";
 
     mainContent.style.display="none";    
 
@@ -53,6 +55,8 @@ function playBreakout(){
     game.style.display="block";
     game.style.width="72vh";
     game.style.height="90vh";
+    game.style.backgroundColor = "rgb(250, 200, 152)";
+    game.style.color = "black";
 
     mainContent.style.display="none";
 
