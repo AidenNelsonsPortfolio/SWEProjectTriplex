@@ -25,6 +25,8 @@ function playSnake(){
     game.style.display="block";
     game.style.height="90vh";
     game.style.width="90vh";
+    game.style.backgroundColor = "rgb(0, 191, 255)";
+    game.style.color = "black";
 
     mainContent.style.display="none";
     
