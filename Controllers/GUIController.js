@@ -41,22 +41,9 @@ function playTetris(){
     game.style.width="45vh";
     game.style.color = "black";
     mainContent.style.display="none";  
-    // Initial color values, it starts of with light pink and increments the rgb values
-    let r = 189;
-    let g = 153;
-    let b = 194;
-    let increment = 10;
 
-    // Set interval to update the background color every 15 seconds
-    setInterval(function() {
-        // Update color values with a random increment
-        r = Math.min(Math.max(r + (Math.random() * increment * 2) - increment, 0), 255);
-        g = Math.min(Math.max(g + (Math.random() * increment * 2) - increment, 0), 255);
-        b = Math.min(Math.max(b + (Math.random() * increment * 2) - increment, 0), 255);
-
-        // Set the updated color value
-        game.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-    }, 15000);  
+    //creates a gradient effect from orange to pink
+    game.style.backgroundColor = "linear-gradient(90deg, orange, pink)";
 
     //Load tetris game (and audio, pause menu), from tetris.js
     loadTetris();
