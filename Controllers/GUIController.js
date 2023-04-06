@@ -25,8 +25,23 @@ function playSnake(){
     game.style.display="block";
     game.style.height="90vh";
     game.style.width="90vh";
-
+    game.style.color = "black";
     mainContent.style.display="none";
+    game.style.backgroundColor = "rgba(113, 132, 172, 0.808)";
+
+    var animation = game.animate([
+        { left: "-1000px" },
+        { left: "50%" }
+      ], {
+        duration: 1000,
+        easing: "ease-in-out",
+        fill: "forwards"
+      });
+
+    //creates a gradient effect from orange to pink
+    // game.style.backgroundColor = "linear-gradient(90deg, orange, pink)";
+    // game.style.backgroundColor = "linear-gradient(90deg, rgb(204, 171, 204), rgb(204, 155, 115))";
+    
     
     //Load snake game (and audio, pause menu), from snake.js
     loadSnake();
@@ -38,8 +53,21 @@ function playTetris(){
     game.style.display="block";
     game.style.height="90vh";
     game.style.width="45vh";
+    game.style.color = "black";
+    mainContent.style.display="none";  
+    game.style.backgroundColor = "rgb(91, 129, 123)";
 
-    mainContent.style.display="none";    
+    var animation = game.animate([
+        { left: "-1000px" },
+        { left: "50%" }
+      ], {
+        duration: 1000,
+        easing: "ease-in-out",
+        fill: "forwards"
+      });
+
+    //creates a gradient effect from orange to pink
+    // game.style.backgroundColor = "linear-gradient(90deg, orange, pink)";
 
     //Load tetris game (and audio, pause menu), from tetris.js
     loadTetris();
@@ -51,8 +79,18 @@ function playBreakout(){
     game.style.display="block";
     game.style.width="72vh";
     game.style.height="90vh";
-
+    game.style.backgroundColor = "rgb(250, 200, 152)";
+    game.style.color = "black";
     mainContent.style.display="none";
+
+    var animation = game.animate([
+        { left: "-1000px" },
+        { left: "50%" }
+      ], {
+        duration: 1000,
+        easing: "ease-in-out",
+        fill: "forwards"
+      });
 
     //Load breakout game (and audio, pause menu), from breakout.js
     loadBreakout();

@@ -38,7 +38,7 @@ export function loadHelpPopup(screenName){
 
     if(screenName == "home"){
         h2.textContent = 'Welcome to Triplex';
-        p1.textContent = 'In order to start click on the game you would like to play';
+        p1.textContent = 'In order to start click on the game you would like to play. To pause hit escape';
         p2.textContent = 'Login with your Google Account or Create a New Account!';
         p3.innerHTML = '<b>Enjoy Triplexing!</b>';
     }
@@ -47,21 +47,21 @@ export function loadHelpPopup(screenName){
         h2.textContent = 'Snake';
         p1.textContent = 'Use the arrow keys to move the snake';
         p2.textContent = 'Eat the food to grow';
-        p3.textContent = 'Avoid hitting yourself!';
+        p3.textContent = 'Avoid hitting yourself! To pause hit escape';
     }
 
     if(screenName == "tetris"){
         h2.textContent = 'Tetris';
         p1.textContent = 'Use the arrow keys to move or rotate the tetromino';
         p2.textContent = 'Hold the down arrow key to speed up the tetromino';
-        p3.textContent = 'Fill up a row to clear it!';
+        p3.textContent = 'Fill up a row to clear it! To pause hit escape';
     }
 
     if(screenName == "breakout"){
         h2.textContent = 'Breakout';
         p1.textContent = 'Use the left and right arrow keys to move the paddle';
         p2.textContent = 'Bounce the ball off the paddle to break the bricks';
-        p3.textContent = 'Break all the bricks to win!';
+        p3.textContent = 'Break all the bricks to win! To pause hit escape';
     }
 
     //Append the elements to the help popup
