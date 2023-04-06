@@ -28,7 +28,7 @@ function playSnake(){
     game.style.color = "black";
     mainContent.style.display="none";
     game.style.backgroundColor = "rgba(113, 132, 172, 0.808)";
-    
+
     var animation = game.animate([
         { left: "-1000px" },
         { left: "50%" }
@@ -57,6 +57,15 @@ function playTetris(){
     mainContent.style.display="none";  
     game.style.backgroundColor = "rgb(91, 129, 123)";
 
+    var animation = game.animate([
+        { left: "-1000px" },
+        { left: "50%" }
+      ], {
+        duration: 1000,
+        easing: "ease-in-out",
+        fill: "forwards"
+      });
+
     //creates a gradient effect from orange to pink
     // game.style.backgroundColor = "linear-gradient(90deg, orange, pink)";
 
@@ -72,8 +81,16 @@ function playBreakout(){
     game.style.height="90vh";
     game.style.backgroundColor = "rgb(250, 200, 152)";
     game.style.color = "black";
-
     mainContent.style.display="none";
+
+    var animation = game.animate([
+        { left: "-1000px" },
+        { left: "50%" }
+      ], {
+        duration: 1000,
+        easing: "ease-in-out",
+        fill: "forwards"
+      });
 
     //Load breakout game (and audio, pause menu), from breakout.js
     loadBreakout();
