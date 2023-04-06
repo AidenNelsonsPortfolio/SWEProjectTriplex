@@ -27,9 +27,11 @@ function playSnake(){
     game.style.width="90vh";
     game.style.color = "black";
     mainContent.style.display="none";
+    game.style.backgroundColor = "rgba(113, 132, 172, 0.808)";
+
     //creates a gradient effect from orange to pink
     // game.style.backgroundColor = "linear-gradient(90deg, orange, pink)";
-    game.style.backgroundColor = "linear-gradient(90deg, rgb(204, 171, 204), rgb(204, 155, 115))";
+    // game.style.backgroundColor = "linear-gradient(90deg, rgb(204, 171, 204), rgb(204, 155, 115))";
     
     
     //Load snake game (and audio, pause menu), from snake.js
@@ -44,9 +46,10 @@ function playTetris(){
     game.style.width="45vh";
     game.style.color = "black";
     mainContent.style.display="none";  
+    game.style.backgroundColor = "rgb(91, 129, 123)";
 
     //creates a gradient effect from orange to pink
-    game.style.backgroundColor = "linear-gradient(90deg, orange, pink)";
+    // game.style.backgroundColor = "linear-gradient(90deg, orange, pink)";
 
     //Load tetris game (and audio, pause menu), from tetris.js
     loadTetris();
