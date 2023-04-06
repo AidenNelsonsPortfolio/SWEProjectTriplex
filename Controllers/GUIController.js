@@ -28,7 +28,9 @@ function playSnake(){
     game.style.color = "black";
     mainContent.style.display="none";
     //creates a gradient effect from orange to pink
-    game.style.backgroundColor = "linear-gradient(90deg, orange, pink)";
+    // game.style.backgroundColor = "linear-gradient(90deg, orange, pink)";
+    game.style.backgroundColor = "linear-gradient(90deg, rgb(204, 171, 204), rgb(204, 155, 115))";
+    
     
     //Load snake game (and audio, pause menu), from snake.js
     loadSnake();
