@@ -28,6 +28,15 @@ function playSnake(){
     game.style.color = "black";
     mainContent.style.display="none";
     game.style.backgroundColor = "rgba(113, 132, 172, 0.808)";
+    
+    var animation = game.animate([
+        { left: "-1000px" },
+        { left: "50%" }
+      ], {
+        duration: 1000,
+        easing: "ease-in-out",
+        fill: "forwards"
+      });
 
     //creates a gradient effect from orange to pink
     // game.style.backgroundColor = "linear-gradient(90deg, orange, pink)";
