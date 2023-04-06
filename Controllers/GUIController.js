@@ -25,7 +25,6 @@ function playSnake(){
     game.style.display="block";
     game.style.height="90vh";
     game.style.width="90vh";
-    game.style.backgroundColor = "rgb(174,198,207)";
     game.style.color = "black";
     mainContent.style.display="none";
     //creates a gradient effect from orange to pink
