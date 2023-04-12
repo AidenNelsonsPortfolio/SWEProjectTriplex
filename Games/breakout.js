@@ -122,11 +122,11 @@ export function loadBreakout(){
   const ball = {
     x: 130,
     y: 260,
-    width: 5,
-    height: 5,
+    width: 15,
+    height: 15,
 
     // how fast the ball should go in either the x or y direction
-    speed: 8,
+    speed: 6,
 
     // ball velocity
     dx: 0,
