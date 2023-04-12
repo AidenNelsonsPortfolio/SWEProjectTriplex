@@ -20,6 +20,11 @@ export function loadBreakout(){
   //Load the help popup for breakout (from HelpPopupController.js)
   loadHelpPopup("breakout");
 
+  //Display score and high score
+  const scoreboard = document.getElementById("score");
+  scoreboard.style.display = "block";
+
+
   //When the home button is clicked, stop the game loop, clear the canvas, stop the audio, reset the pause menu, and return to the home page
   function returnHome(){
 
@@ -242,11 +247,11 @@ export function loadBreakout(){
   document.addEventListener('keydown', function(e) {
     // left arrow key
     if (e.which === 37) {
-      paddle.dx = -3;
+      paddle.dx = -7;
     }
     // right arrow key
     else if (e.which === 39) {
-      paddle.dx = 3;
+      paddle.dx = 7;
     }
 
     // space key
