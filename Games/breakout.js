@@ -247,11 +247,11 @@ export function loadBreakout(){
   document.addEventListener('keydown', function(e) {
     // left arrow key
     if (e.which === 37) {
-      paddle.dx = -7;
+      paddle.dx = -10;
     }
     // right arrow key
     else if (e.which === 39) {
-      paddle.dx = 7;
+      paddle.dx = 10;
     }
 
     // space key
