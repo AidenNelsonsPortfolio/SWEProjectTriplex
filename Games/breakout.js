@@ -117,7 +117,7 @@ export function loadBreakout(){
     // place the paddle horizontally in the middle of the screen
     x: canvas.width / 2 - brickWidth / 2,
     y: canvas.height-canvas.height/6,
-    width: brickWidth,
+    width: brickWidth * 2,
     height: brickHeight,
 
     // paddle x velocity
