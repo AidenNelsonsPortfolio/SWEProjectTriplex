@@ -126,7 +126,7 @@ export function loadBreakout(){
     height: 5,
 
     // how fast the ball should go in either the x or y direction
-    speed: 2,
+    speed: 8,
 
     // ball velocity
     dx: 0,
