@@ -21,16 +21,14 @@ export function loadBreakout(){
   loadHelpPopup("breakout");
 
   //Display score and high score
-    var score = 0;
-    var highscore = 0;
+  var score = 0;
+  var highscore = 0;
 
-    const scoreboard = document.getElementById("score-board");
-    scoreboard.style.display = "block";
+  const scoreboard = document.getElementById("score-board");
+  scoreboard.style.display = "block";
 
-    var breakoutscorestr = ""
-    breakoutscorestr = "Score: " + score +"\nHigh Score: " + highscore;
-    scoreboard.innerHTML = breakoutscorestr;
-  
+  document.getElementById("score-board").innerHTML = "Score: " + score; 
+
 
 
   //When the home button is clicked, stop the game loop, clear the canvas, stop the audio, reset the pause menu, and return to the home page
