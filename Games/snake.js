@@ -20,6 +20,19 @@ export function loadSnake(){
   //Load the help popup for snake (from HelpPopupController.js)
   loadHelpPopup("snake");
 
+  //Display score and high score
+  var score = 0;
+  var highscore = 0;
+
+  const scoreboard = document.getElementById("score-board");
+  scoreboard.style.display = "block";
+
+  const highscoreboard = document.getElementById("highscore-board");
+  highscoreboard.style.display = "block";
+
+  document.getElementById("score-board").innerHTML = "Score: " + score; 
+  document.getElementById("highscore-board").innerHTML = "High Score: " + highscore; 
+
   //When the home button is clicked, stop the game loop, clear the canvas, stop the audio, reset the pause menu, and return to the home page
   function returnHome(){
     //Stop game loop, clear canvas
@@ -34,6 +47,10 @@ export function loadSnake(){
 
     //Reset help popup (from HelpPopupController.js)
     loadHelpPopup("home");
+
+    //Make score board dissapear
+    scoreboard.style.display = "none"
+    highscoreboard.style.display = "none"
 
     //Make home display visible, canvas invisible
     mainContent.style.display="flex";
@@ -136,6 +153,15 @@ export function loadSnake(){
 
       // snake ate apple
       if (cell.x === apple.x && cell.y === apple.y) {
+        //update score
+        score += 1;
+        if (score > highscore) {
+          highscore = score;
+        }
+        document.getElementById("score-board").innerHTML = "Score: " + score;
+        document.getElementById("highscore-board").innerHTML = "High Score: " + highscore;
+
+
         snake.maxCells++;
 
         // canvas is 400x400 which is 25x25 grids
@@ -157,6 +183,11 @@ export function loadSnake(){
 
           apple.x = getRandomInt(0, 25) * grid;
           apple.y = getRandomInt(0, 25) * grid;
+
+
+          //reset score
+          score = 0;
+          document.getElementById("score-board").innerHTML = "Score: " + score;
         }
       }
     });
