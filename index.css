@@ -406,12 +406,12 @@ header {
     z-index: 400;
     font-size: 30px;
     position: fixed;
-    top: 40%;
+    top: 45%;
     left: 5%;
 
     border-radius: 5px;
 
-    transform: translate(-5%, -40%);
+    transform: translate(-5%, -45%);
 
     padding: 5px;
     text-align: left;
@@ -428,12 +428,12 @@ header {
     z-index: 400;
     font-size: 30px;
     position: fixed;
-    top: 60%;
+    top: 55%;
     left: 5%;
 
     border-radius: 5px;
 
-    transform: translate(-5%, -60%);
+    transform: translate(-5%, -55%);
 
     padding: 5px;
     text-align: left;
