@@ -21,11 +21,9 @@ export function loadBreakout(){
   loadHelpPopup("breakout");
 
   //Display score and high score
-  var isingame = true;
-  if (isingame) {
     const scoreboard = document.getElementById("score-board");
-    scoreboard.style.display = "block";
-  }
+    scoreboard.style.display="flex";
+
   
 
 
