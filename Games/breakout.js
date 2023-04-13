@@ -205,6 +205,9 @@ export function loadBreakout(){
       ball.y = 260;
       ball.dx = 0;
       ball.dy = 0;
+
+      //reset score
+      score = 0;
     }
 
     // check to see if ball collides with paddle. if they do change y velocity
