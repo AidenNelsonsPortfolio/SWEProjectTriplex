@@ -26,6 +26,10 @@ export function loadBreakout(){
 
     const scoreboard = document.getElementById("score-board");
     scoreboard.style.display = "block";
+
+    var breakoutscorestr = ""
+    breakoutscorestr = "Score: " + score +"\nHigh Score: " + highscore;
+    scoreboard.innerHTML = breakoutscorestr;
   
 
 
