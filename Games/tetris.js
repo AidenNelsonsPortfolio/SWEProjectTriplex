@@ -215,7 +215,7 @@ export function loadTetris(){
       context.textBaseline = 'middle';
       context.fillText('Press the spacebar to restart', canvas.width / 2, canvas.height / 1.50);
       document.addEventListener('keydown', function(e) {
-        if (gameover && e.which === 32) {
+        if (e.which === 32) {
           gameOver = false;
           highscore = score; //can't figure out how to reset the game and keep the highscore from resetting
           loadTetris()
