@@ -25,8 +25,7 @@ export function loadBreakout(){
     var highscore = 0;
 
     const scoreboard = document.getElementById("score-board");
-    scoreboard.style.display="flex";
-
+    scoreboard.style.display = "block";
   
 
 
@@ -46,6 +45,8 @@ export function loadBreakout(){
     //Reset help popup (from HelpPopupController.js)
     loadHelpPopup("home");
     
+    //Make score board dissapear
+    scoreboard.style.display = "none"
 
     //Make home display visible, canvas invisible
     mainContent.style.display="flex";
