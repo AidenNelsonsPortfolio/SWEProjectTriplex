@@ -208,6 +208,7 @@ export function loadBreakout(){
 
       //reset score
       score = 0;
+      document.getElementById("score-board").innerHTML = "Score: " + score;
     }
 
     // check to see if ball collides with paddle. if they do change y velocity
