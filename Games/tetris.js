@@ -67,8 +67,6 @@ export function loadTetris(){
 
   /////////////////////////////////////////////////////////////////
   //GAME CODE STARTS HERE /////////////////////////////////////////
-  var resetcheck = false;
-
   function getRandomInt(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);
@@ -206,7 +204,6 @@ export function loadTetris(){
       context.fillText('GAME OVER!', canvas.width / 2, canvas.height / 2);
 
       //reset game (added in cause it seems like an important feature)
-      resetcheck = true;
       context.fillStyle = 'black';
       context.globalAlpha = 0.75;
       context.fillRect(0, canvas.height / 1.50 - 30, canvas.width, 60);
@@ -218,8 +215,7 @@ export function loadTetris(){
       context.textBaseline = 'middle';
       context.fillText('Press the spacebar to restart', canvas.width / 2, canvas.height / 1.50);
       document.addEventListener('keydown', function(e) {
-        if (resetcheck && e.which === 32) {
-          resetcheck = false;
+        if (gameover && e.which === 32) {
           gameOver = false;
           highscore = score; //can't figure out how to reset the game and keep the highscore from resetting
           loadTetris()
