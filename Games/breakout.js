@@ -206,9 +206,6 @@ export function loadBreakout(){
       ball.dx = 0;
       ball.dy = 0;
 
-      //reset score
-      score = 0;
-      document.getElementById("score-board").innerHTML = "Score: " + score;
     }
 
     // check to see if ball collides with paddle. if they do change y velocity
@@ -287,6 +284,10 @@ export function loadBreakout(){
     if (ball.dx === 0 && ball.dy === 0 && e.which === 32) {
       ball.dx = ball.speed;
       ball.dy = ball.speed;
+
+      //reset score
+      score = 0;
+      document.getElementById("score-board").innerHTML = "Score: " + score;
     }
   });
 
