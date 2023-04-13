@@ -222,6 +222,15 @@ export function loadBreakout(){
       const brick = bricks[i];
 
       if (collides(ball, brick)) {
+        //update score
+        score += 1;
+        if (score > highscore) {
+          highscore = score;
+        }
+        document.getElementById("score-board").innerHTML = "Score: " + score;
+        document.getElementById("highscore-board").innerHTML = "High Score: " + highscore; 
+
+
         // remove brick from the bricks array
         bricks.splice(i, 1);
 
