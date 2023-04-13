@@ -27,8 +27,11 @@ export function loadBreakout(){
   const scoreboard = document.getElementById("score-board");
   scoreboard.style.display = "block";
 
-  var scorestr = "Score: " + "\nHighscore: ";
-  document.getElementById("score-board").innerHTML = scorestr; 
+  const highscoreboard = document.getElementById("highscore-board");
+  highscoreboard.style.display = "block";
+
+  document.getElementById("score-board").innerHTML = "Score: " + score; 
+  document.getElementById("highscore-board").innerHTML = "High Score: " + highscore; 
 
 
 
@@ -51,6 +54,7 @@ export function loadBreakout(){
     
     //Make score board dissapear
     scoreboard.style.display = "none"
+    highscoreboard.style.display = "none"
 
     //Make home display visible, canvas invisible
     mainContent.style.display="flex";
