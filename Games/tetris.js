@@ -219,7 +219,6 @@ export function loadTetris(){
       document.addEventListener('keydown', function(e) {
         if (e.which === 32) {
           gameOver = false;
-          raF = requestAnimationFrame(loop);
           loadTetris()
         }
       });
