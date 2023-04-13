@@ -204,6 +204,15 @@ export function loadTetris(){
       context.textAlign = 'center';
       context.textBaseline = 'middle';
       context.fillText('GAME OVER!', canvas.width / 2, canvas.height / 2);
+
+      //reset game (added in cause it seems like an important feature)
+      context.fillText('Press the spacebar to restart', canvas.width / 2, canvas.height / 1.75);
+      document.addEventListener('keydown', function(e) {
+        if (e.which === 32) {
+          rAF = requestAnimationFrame(loop);
+        }
+      });
+
     }
     
     const canvas = document.getElementById('game');
