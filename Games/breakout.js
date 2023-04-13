@@ -27,7 +27,8 @@ export function loadBreakout(){
   const scoreboard = document.getElementById("score-board");
   scoreboard.style.display = "block";
 
-  document.getElementById("score-board").innerHTML = "Score: " + score; 
+  scorestr = "Score: " + score + "\nHighscore: " + highscore;
+  document.getElementById("score-board").innerHTML = scorestr; 
 
 
 
