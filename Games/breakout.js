@@ -21,6 +21,9 @@ export function loadBreakout(){
   loadHelpPopup("breakout");
 
   //Display score and high score
+    var score = 0;
+    var highscore = 0;
+
     const scoreboard = document.getElementById("score-board");
     scoreboard.style.display="flex";
 

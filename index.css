@@ -401,6 +401,8 @@ header {
 
 
 #score-board {
+    display:none;
+    
     z-index: 400;
     font-size: 30px;
     position: fixed;
