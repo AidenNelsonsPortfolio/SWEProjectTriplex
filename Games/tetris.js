@@ -20,6 +20,20 @@ export function loadTetris(){
   //Load the help menu for tetris (from HelpPopupController.js)
   loadHelpPopup("tetris");
 
+  //Display score and high score
+  var score = 0;
+  var highscore = 0;
+
+  const scoreboard = document.getElementById("score-board");
+  scoreboard.style.display = "block";
+
+  const highscoreboard = document.getElementById("highscore-board");
+  highscoreboard.style.display = "block";
+
+  document.getElementById("score-board").innerHTML = "Score: " + score; 
+  document.getElementById("highscore-board").innerHTML = "High Score: " + highscore;
+
+
   //When the home button is clicked, stop the game loop, clear the canvas, stop the audio, reset the pause menu, and return to the home page
   function returnHome(){
     //Stop game loop, clear canvas
@@ -34,6 +48,10 @@ export function loadTetris(){
 
     //Reset help popup (from HelpPopupController.js)
     loadHelpPopup("home");
+
+    //Make score board dissapear
+    scoreboard.style.display = "none"
+    highscoreboard.style.display = "none"
 
     //Make home display visible, canvas invisible
     mainContent.style.display="flex";
@@ -132,6 +150,10 @@ export function loadTetris(){
     
             // game over if piece has any part offscreen
             if (tetromino.row + row < 0) {
+              //reset score
+              score = 0;
+              document.getElementById("score-board").innerHTML = "Score: " + score;             
+
               return showGameOver();
             }
     
@@ -143,6 +165,14 @@ export function loadTetris(){
       // check for line clears starting from the bottom and working our way up
       for (let row = playfield.length - 1; row >= 0; ) {
         if (playfield[row].every(cell => !!cell)) {
+        //update score
+        score += 1;
+        if (score > highscore) {
+          highscore = score;
+        }
+        document.getElementById("score-board").innerHTML = "Score: " + score;
+        document.getElementById("highscore-board").innerHTML = "High Score: " + highscore;
+
     
           // drop every row above this one
           for (let r = row; r >= 0; r--) {
