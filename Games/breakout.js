@@ -21,7 +21,7 @@ export function loadBreakout(){
   loadHelpPopup("breakout");
 
   //Display score and high score
-  const scoreboard = document.getElementById("score");
+  const scoreboard = document.getElementById("score-board");
   scoreboard.style.display = "block";
 
 
@@ -117,7 +117,7 @@ export function loadBreakout(){
     // place the paddle horizontally in the middle of the screen
     x: canvas.width / 2 - brickWidth / 2,
     y: canvas.height-canvas.height/6,
-    width: brickWidth * 2,
+    width: (Math.floor((canvas.width-24-28)/14)) * 2,
     height: brickHeight,
 
     // paddle x velocity
