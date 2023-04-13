@@ -32,6 +32,7 @@ export function loadBreakout(){
 
 
 
+
   //When the home button is clicked, stop the game loop, clear the canvas, stop the audio, reset the pause menu, and return to the home page
   function returnHome(){
 
