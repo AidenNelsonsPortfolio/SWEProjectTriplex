@@ -5,6 +5,7 @@ import { loadHelpPopup } from "../Controllers/HelpPopupController.js";
 
 // get a random integer between the range of [min,max]
 // @see https://stackoverflow.com/a/1527820/2124254
+var highscoreforafterreset = 0;
 
 export function loadTetris(){
   const homeButton = document.getElementById("home-button");
@@ -22,7 +23,7 @@ export function loadTetris(){
 
   //Display score and high score
   var score = 0;
-  var highscore = 0;
+  var highscore = highscoreforafterreset;
 
   const scoreboard = document.getElementById("score-board");
   scoreboard.style.display = "block";
@@ -219,6 +220,7 @@ export function loadTetris(){
       document.addEventListener('keydown', function(e) {
         if (e.which === 32) {
           gameOver = false;
+          highscoreforafterreset = highscore;
           loadTetris()
         }
       });
