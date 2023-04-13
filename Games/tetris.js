@@ -152,7 +152,9 @@ export function loadTetris(){
               score = 0;
               document.getElementById("score-board").innerHTML = "Score: " + score;             
 
-              return showGameOver();
+              // return showGameOver();
+              gameOver = isPaused();
+              showGameOver();
             }
     
             playfield[tetromino.row + row][tetromino.col + col] = tetromino.name;
@@ -189,7 +191,8 @@ export function loadTetris(){
     
     // show the game over screen
     function showGameOver() {
-      cancelAnimationFrame(rAF);
+      if (gameOver) return;
+
       gameOver = true;
     
       context.fillStyle = 'black';
@@ -215,13 +218,11 @@ export function loadTetris(){
       context.textBaseline = 'middle';
       context.fillText('Press the spacebar to restart', canvas.width / 2, canvas.height / 1.50);
       document.addEventListener('keydown', function(e) {
-        if (gameOver == true) {
           if (e.which === 32) {
             gameOver = false;
             highscore = score; //can't figure out how to reset the game and keep the highscore from resetting
             loadTetris()
           }
-        }
         
       });
 
