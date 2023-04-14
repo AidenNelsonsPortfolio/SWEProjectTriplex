@@ -399,7 +399,6 @@ header {
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
 }
 
-
 #score-board {
     display:none;
     
@@ -442,4 +441,170 @@ header {
     backdrop-filter: blur(5px); 
     
     box-shadow: 0px 0px 10px rgba(255, 253, 228, 0.986);
+}
+
+/*All login and sign up popups/buttons*/
+#login-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute; 
+    top: 2rem;
+    right: 6rem;
+
+    width: 3rem;
+    height: 3rem;
+
+    color: white;
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 50%;
+
+    text-align: right;
+    text-decoration: none;
+    font-size: 2rem;
+    cursor: pointer;
+
+    transition: all 0.5s ease-in-out;
+}
+
+#login-button:hover{
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 30px white;
+}
+
+#login-popup {
+    display: none;
+    position: fixed;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    opacity: 0.95;
+
+    box-shadow: 0px 0px 10px white;
+
+    color: black;
+    z-index: 1000;
+}
+
+#close-login-button {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    
+    font-size: 24px;
+    background-color: #9344a9;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    
+    transition: all 0.5s ease-in-out;
+}
+
+#close-login-button:hover{
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+#log-in {
+    font-size: 24px;
+    background-color: #9344a9;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    float: left;
+
+    transition: all 0.5s ease-in-out;
+}
+
+#log-in:hover{
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+#sign-up {
+    font-size: 24px;
+    background-color: #9344a9;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    float: right;
+
+    transition: all 0.5s ease-in-out;
+}
+
+#sign-up:hover{
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+#sign-up-popup {
+    display: none;
+    position: fixed;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+
+    background-color: rgba(255, 255, 255, 0.95); /* set a semi-transparent white background */
+    backdrop-filter: blur(10px); /* apply a blur effect */
+    opacity: 0.95; /* adjust opacity as desired */
+
+    box-shadow: 0px 0px 10px white;
+
+    color: black;
+    z-index: 1000;
+}
+
+#close-sign-up {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+
+    font-size: 24px;
+    background-color: #9344a9;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+
+    transition: all 0.5s ease-in-out;
+}
+
+#close-sign-up:hover{
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+#create-account {
+    font-size: 24px;
+    background-color: #9344a9;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    float: right;
+
+    transition: all 0.5s ease-in-out;
+}
+
+#create-account:hover {
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
 }
