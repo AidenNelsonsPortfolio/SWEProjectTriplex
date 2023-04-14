@@ -163,21 +163,21 @@ export function loadTetris(){
       // check for line clears starting from the bottom and working our way up
       for (let row = playfield.length - 1; row >= 0; ) {
         if (playfield[row].every(cell => !!cell)) {
-        //update score
-        score += 1;
-        if (score > highscore) {
-          highscore = score;
-        }
-        document.getElementById("score-board").innerHTML = "Score: " + score;
-        document.getElementById("highscore-board").innerHTML = "High Score: " + highscore;
-
-    
+      
           // drop every row above this one
           for (let r = row; r >= 0; r--) {
             for (let c = 0; c < playfield[r].length; c++) {
               playfield[r][c] = playfield[r-1][c];
             }
           }
+
+          //update score
+          score += 1;
+          if (score > highscore) {
+            highscore = score;
+          }
+          document.getElementById("score-board").innerHTML = "Score: " + score;
+          document.getElementById("highscore-board").innerHTML = "High Score: " + highscore;
         }
         else {
           row--;
