@@ -189,6 +189,7 @@ export function loadTetris(){
     
     // show the game over screen
     function showGameOver() {
+      cancelAnimationFrame(rAF);
       gameOver = true;
     
       context.fillStyle = 'black';
@@ -217,7 +218,7 @@ export function loadTetris(){
           if (e.which === 32) {
             gameOver = false;
             highscore = score; //can't figure out how to reset the game and keep the highscore from resetting
-            loadTetris()
+            loadTetris();
           }
         
       });
