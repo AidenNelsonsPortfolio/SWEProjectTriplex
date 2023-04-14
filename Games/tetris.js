@@ -189,7 +189,7 @@ export function loadTetris(){
     
     // show the game over screen
     function showGameOver() {
-      if (gameover === false) return;
+      if (gameOver === false) return;
 
       gameOver = true;
     
