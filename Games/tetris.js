@@ -152,7 +152,6 @@ export function loadTetris(){
               score = 0;
               document.getElementById("score-board").innerHTML = "Score: " + score;             
 
-              gameOver = isPaused();
               return showGameOver();
             }
     
