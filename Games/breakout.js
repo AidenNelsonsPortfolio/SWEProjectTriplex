@@ -20,6 +20,22 @@ export function loadBreakout(){
   //Load the help popup for breakout (from HelpPopupController.js)
   loadHelpPopup("breakout");
 
+  //Display score and high score
+  var score = 0;
+  var highscore = 0;
+
+  const scoreboard = document.getElementById("score-board");
+  scoreboard.style.display = "block";
+
+  const highscoreboard = document.getElementById("highscore-board");
+  highscoreboard.style.display = "block";
+
+  document.getElementById("score-board").innerHTML = "Score: " + score; 
+  document.getElementById("highscore-board").innerHTML = "High Score: " + highscore; 
+
+
+
+
   //When the home button is clicked, stop the game loop, clear the canvas, stop the audio, reset the pause menu, and return to the home page
   function returnHome(){
 
@@ -36,6 +52,9 @@ export function loadBreakout(){
     //Reset help popup (from HelpPopupController.js)
     loadHelpPopup("home");
     
+    //Make score board dissapear
+    scoreboard.style.display = "none"
+    highscoreboard.style.display = "none"
 
     //Make home display visible, canvas invisible
     mainContent.style.display="flex";
@@ -112,7 +131,7 @@ export function loadBreakout(){
     // place the paddle horizontally in the middle of the screen
     x: canvas.width / 2 - brickWidth / 2,
     y: canvas.height-canvas.height/6,
-    width: brickWidth,
+    width: (Math.floor((canvas.width-24-28)/14)) * 2,
     height: brickHeight,
 
     // paddle x velocity
@@ -122,11 +141,11 @@ export function loadBreakout(){
   const ball = {
     x: 130,
     y: 260,
-    width: 5,
-    height: 5,
+    width: 15,
+    height: 15,
 
     // how fast the ball should go in either the x or y direction
-    speed: 2,
+    speed: 6,
 
     // ball velocity
     dx: 0,
@@ -186,6 +205,7 @@ export function loadBreakout(){
       ball.y = 260;
       ball.dx = 0;
       ball.dy = 0;
+
     }
 
     // check to see if ball collides with paddle. if they do change y velocity
@@ -203,6 +223,15 @@ export function loadBreakout(){
       const brick = bricks[i];
 
       if (collides(ball, brick)) {
+        //update score
+        score += 1;
+        if (score > highscore) {
+          highscore = score;
+        }
+        document.getElementById("score-board").innerHTML = "Score: " + score;
+        document.getElementById("highscore-board").innerHTML = "High Score: " + highscore; 
+
+
         // remove brick from the bricks array
         bricks.splice(i, 1);
 
@@ -242,11 +271,11 @@ export function loadBreakout(){
   document.addEventListener('keydown', function(e) {
     // left arrow key
     if (e.which === 37) {
-      paddle.dx = -3;
+      paddle.dx = -10;
     }
     // right arrow key
     else if (e.which === 39) {
-      paddle.dx = 3;
+      paddle.dx = 10;
     }
 
     // space key
@@ -255,6 +284,10 @@ export function loadBreakout(){
     if (ball.dx === 0 && ball.dy === 0 && e.which === 32) {
       ball.dx = ball.speed;
       ball.dy = ball.speed;
+
+      //reset score
+      score = 0;
+      document.getElementById("score-board").innerHTML = "Score: " + score;
     }
   });
 
