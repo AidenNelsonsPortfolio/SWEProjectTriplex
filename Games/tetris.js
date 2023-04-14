@@ -192,7 +192,6 @@ export function loadTetris(){
     function showGameOver() {
       if (gameOver === false) return;
 
-      gameOver = true;
     
       context.fillStyle = 'black';
       context.globalAlpha = 0.75;
