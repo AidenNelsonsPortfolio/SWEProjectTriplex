@@ -152,9 +152,8 @@ export function loadTetris(){
               score = 0;
               document.getElementById("score-board").innerHTML = "Score: " + score;             
 
-              // return showGameOver();
               gameOver = isPaused();
-              showGameOver();
+              return showGameOver();
             }
     
             playfield[tetromino.row + row][tetromino.col + col] = tetromino.name;
@@ -191,6 +190,8 @@ export function loadTetris(){
     
     // show the game over screen
     function showGameOver() {
+      if (gameover === false) return;
+
       gameOver = true;
     
       context.fillStyle = 'black';
