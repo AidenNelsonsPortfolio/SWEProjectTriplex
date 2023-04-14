@@ -150,7 +150,8 @@ export function loadTetris(){
             if (tetromino.row + row < 0) {
               //reset score
               score = 0;
-              document.getElementById("score-board").innerHTML = "Score: " + score;             
+              document.getElementById("score-board").innerHTML = "Score: " + score;
+              gameOver = true;             
 
               return showGameOver();
             }
