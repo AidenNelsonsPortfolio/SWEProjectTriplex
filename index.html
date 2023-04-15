@@ -20,41 +20,52 @@
         <button id="close-help-button">Close</button>
     </div>
 
+    <!--Call the login controller-->
+    <script defer type="module" src="Controllers/LoginController.js"></script>
+
     <!--Login button to have users log in.-->
     <img src="Images/ProfileIcon.png" id="login-button" height="100%" width="70%">
 
     <!--Login popup, opens screen to prompt for username and password.-->
     <div id="login-popup">
-        <h2 class="reverse-gradient-text">Login to Triplex</h2>
+        <h1 class="reverse-gradient-text">Login to Triplex</h1>
         <fieldset>
-            <label for="username">Username</label>
-            <input type="text" placeholder="Username" name="username" required>
+            <input type="email" placeholder="Email" required id="signInEmail">
         </fieldset>
         <fieldset>
-            <label for="passw">Password</label>
-            <input type="password" placeholder="Password" name="passw" required>
+            <input type="password" placeholder="Password" required id="signInPassword">
         </fieldset>
         <button id="log-in">Log In</button>
         <button id="close-login-button">Close</button>
-        <button id="sign-up">Sign Up</button>
+        <h3 id="sign-up">Don't have an account? - <span class="reverse-gradient-text" style="font-size: 1.5rem;">Sign Up</span></h3>
+        <h4 id="google-sign-in" class="google">Or, Sign In With <span class="reverse-gradient-text" style="font-size: 1.5rem;">Google</span></h4>
     </div>
     <!--Sign Up popup, prompts user for username, password, and confirm password to create account.-->
     <div id="sign-up-popup">
-        <h2 class="reverse-gradient-text">Sign Up For Triplex</h2>
+        <h1 class="reverse-gradient-text">Sign Up For Triplex</h1>
         <fieldset>
-            <label for="username">Username</label>
-            <input type="text" placeholder="Username" name="username" required>
+            <input type="text" placeholder="Username" id="signUpUsername" required>
         </fieldset>
         <fieldset>
-            <label for="passw">Password</label>
-            <input type="password" placeholder="Password" name="passw" required>
+            <input type="email" placeholder="Email" id="signUpEmail" required>
         </fieldset>
         <fieldset>
-            <label for="passw">Confirm Password</label>
-            <input type="password" placeholder="Password" name="passw" required>
+            <input type="password" placeholder="Password" id="signUpPassword" required>
+        </fieldset>
+        <fieldset>
+            <input type="password" placeholder="Confirm Password" id="signUpConfirmPassword" required>
         </fieldset>
         <button id="close-sign-up">Close</button>
         <button id="create-account">Create Account</button>
+        <h3 id="sign-in">Already have an account? - <span class="reverse-gradient-text" style="font-size: 1.5rem;">Log In</span></h3>
+        <h4 id="google-sign-up" class="google">Or, Sign Up With <span class="reverse-gradient-text" style="font-size: 1.5rem;">Google</span></h4>
+    </div>
+    
+    <div id="signout-popup">
+        <h1 class="reverse-gradient-text">Log Out of Triplex</h1>
+        <div id="sign-out-text">Sign out, <span id="personalSignOut" class="reverse-gradient-text"></span>?</div>
+        <button id="signout-button">Sign Out</button>
+        <button id="close-signout-button">Close</button>
     </div>
 
     <!--Audio button, available in game, hidden on main page.-->
@@ -89,8 +100,11 @@
     </div>
     <div id="highscore-board">
         <p class="gradient-text">High Score: </p>
-    
     </div>
+
+    <div id="welcomeMessage" class="welcome-message reverse-gradient-text"></div>
+    <div id="blurredBackground" class="blurred-background"></div>
+
 
 
     <!--Main page html-->

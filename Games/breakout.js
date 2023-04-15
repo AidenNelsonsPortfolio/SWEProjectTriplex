@@ -1,14 +1,23 @@
 import { stopAudio, loadAudio } from "../Controllers/AudioController.js";
 import { isPaused, loadPauseMenu, resetPauseMenu } from "../Controllers/PauseMenuController.js";
 import { loadHelpPopup } from "../Controllers/HelpPopupController.js";
+import { getUserScore, getCurrentUser} from "../firebase-functions.js";
 
-export function loadBreakout(){
+export async function loadBreakout(){
   const canvas = document.getElementById('game');
   const context = canvas.getContext('2d');
 
   const homeButton = document.getElementById("home-button");
   const mainContent = document.getElementById("main-content");
 
+  //Get the user from firebase
+  var user = await getCurrentUser();
+  var highscore = 0;
+  
+  if (user){
+    //Get the user's high score from firebase
+    highscore = await getUserScore(user.uid, "breakout");
+  }
 
   //Make and then load the breakout audio (from AudioController.js)
   const audio = new Audio("/triplex.github.io/Audio/breakout-sound.mp3");
@@ -20,9 +29,8 @@ export function loadBreakout(){
   //Load the help popup for breakout (from HelpPopupController.js)
   loadHelpPopup("breakout");
 
-  //Display score and high score
+  //Display score and high score (get the high score from firebase)
   var score = 0;
-  var highscore = 0;
 
   const scoreboard = document.getElementById("score-board");
   scoreboard.style.display = "block";
