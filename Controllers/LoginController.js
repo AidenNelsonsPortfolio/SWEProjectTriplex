@@ -244,7 +244,7 @@ logIn.addEventListener("click", (event) => {
                 errorTextSignin.style.display = "block";
                 console.log("Email and/or password not recognized.");
             } 
-            else if(error.code === 'auth/account-exists-with-different-credential'{
+            else if(error.code === 'auth/account-exists-with-different-credential'){
                 errorTextSignin.innerHTML = "Email is already used with Google account.";
                 errorTextSignin.style.display = "block";
                 console.log("Email has already been registered with Google account.");
