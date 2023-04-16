@@ -155,6 +155,10 @@ function showLoggedOutMessage() {
     }, 3000);
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 auth.onAuthStateChanged(async (user) => {
     if (user) {
         // Close the login popup if it is open
@@ -162,13 +166,14 @@ auth.onAuthStateChanged(async (user) => {
         
         try {
             // Get the user's username and display it in the welcome message
-            const username = await getUsername(user.uid);
-            while(username == null){
-                setTimeout(async () => {
-                    username = await getUsername(user.uid);
-                }, 250);
+            let username = await getUsername(user.uid);
+            while (username == null) {
+                await sleep(250); // Wait for 250 milliseconds
+                username = await getUsername(user.uid);
             }
+            
             console.log("Welcome to Triplex,", username);
+            
             showWelcomeMessage(username);
             currentUsername = username;
         } catch (error) {
@@ -217,11 +222,13 @@ logIn.addEventListener("click", (event) => {
     const password = document.getElementById("signInPassword").value;
     
     //Check that all fields are filled in
-    if (email == null || email == "" || password == null || password || ""){
+    if (email == null || email == "" || password == null || password == ""){
         errorTextSignin.innerHTML = "Must fill in all fields.";
         errorTextSignin.style.display = "block";
         return;   
     }
+    
+    console.log("The password and email fields are filled in.");
     
     //Call the signInWithEmailPassword function from firebase-functions.js
     signInWithEmailPassword(email, password)
