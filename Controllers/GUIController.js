@@ -27,7 +27,7 @@ function playSnake(){
     game.style.width="90vh";
     game.style.color = "black";
     mainContent.style.display="none";
-    game.style.backgroundColor = "rgba(113, 132, 172, 0.808)";
+    game.style.background = "transparent";
 
     var animation = game.animate([
         { left: "-1000px" },
@@ -55,7 +55,7 @@ function playTetris(){
     game.style.width="45vh";
     game.style.color = "black";
     mainContent.style.display="none";  
-    game.style.backgroundColor = "rgb(91, 129, 123)";
+    game.style.background = "transparent";
 
     var animation = game.animate([
         { left: "-1000px" },
@@ -75,11 +75,11 @@ function playTetris(){
 
 
 //Load breakout, make the canvas visible and hide the main content when the breakout button is clicked
-function playBreakout(){
+async function playBreakout(){
     game.style.display="block";
     game.style.width="72vh";
     game.style.height="90vh";
-    game.style.backgroundColor = "rgb(250, 200, 152)";
+    game.style.background = "transparent";
     game.style.color = "black";
     mainContent.style.display="none";
 
@@ -93,5 +93,5 @@ function playBreakout(){
       });
 
     //Load breakout game (and audio, pause menu), from breakout.js
-    loadBreakout();
+    await loadBreakout();
 }

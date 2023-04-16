@@ -1,14 +1,35 @@
 import { stopAudio, loadAudio } from "../Controllers/AudioController.js";
 import { isPaused, loadPauseMenu, resetPauseMenu } from "../Controllers/PauseMenuController.js";
 import { loadHelpPopup } from "../Controllers/HelpPopupController.js";
+import { getUserScore, getCurrentUser, getUsername, updateScore} from "../firebase-functions.js";
 
-export function loadBreakout(){
+
+async function updateScoreAsync(userId, game, score) {
+  await updateScore(userId, game, score);
+}
+
+export async function loadBreakout(){
   const canvas = document.getElementById('game');
   const context = canvas.getContext('2d');
 
   const homeButton = document.getElementById("home-button");
   const mainContent = document.getElementById("main-content");
 
+  const breakoutStartText = document.getElementById("breakout-start-text");
+  breakoutStartText.style.display = "block";
+
+  //Get the user from firebase
+  var user = await getCurrentUser();
+  var highscore = 0;
+  var hasUser = user != null;
+  var username = (user != null)? await getUsername(user.uid) : null;
+  var updatedScore = false;
+
+  if (user){
+    //Get the user's high score from firebase
+    let dbsScore = await getUserScore(user.uid, "breakout");
+    highscore = (dbsScore == null) ? 0 : dbsScore;
+  }
 
   //Make and then load the breakout audio (from AudioController.js)
   const audio = new Audio("/triplex.github.io/Audio/breakout-sound.mp3");
@@ -19,6 +40,18 @@ export function loadBreakout(){
 
   //Load the help popup for breakout (from HelpPopupController.js)
   loadHelpPopup("breakout");
+
+  //Display score and high score (get the high score from firebase)
+  var score = 0;
+
+  const scoreboard = document.getElementById("score-board");
+  scoreboard.style.display = "block";
+
+  const highscoreboard = document.getElementById("highscore-board");
+  highscoreboard.style.display = "block";
+
+  document.getElementById("score-board").innerHTML = "Current Score: " + score; 
+  document.getElementById("highscore-board").innerHTML = (hasUser)? username + "'s High Score: " + highscore : "Guest's High Score: " + highscore; 
 
   //When the home button is clicked, stop the game loop, clear the canvas, stop the audio, reset the pause menu, and return to the home page
   function returnHome(){
@@ -36,10 +69,16 @@ export function loadBreakout(){
     //Reset help popup (from HelpPopupController.js)
     loadHelpPopup("home");
     
+    //Make score board dissapear
+    scoreboard.style.display = "none"
+    highscoreboard.style.display = "none"
 
     //Make home display visible, canvas invisible
     mainContent.style.display="flex";
     canvas.style.display="none";
+
+    //Make start text invisible
+    breakoutStartText.style.display = "none";
 
     //Prevent multiple event listeners from being added
     homeButton.removeEventListener("click", returnHome);
@@ -52,8 +91,6 @@ export function loadBreakout(){
 
   /////////////////////////////////////////////////////////////////
   //GAME CODE STARTS HERE /////////////////////////////////////////
-
-
 
   // each row is 14 bricks long. the level consists of 3 blank rows then 8 rows
   // of 4 colors: red, orange, green, and yellow
@@ -73,10 +110,10 @@ export function loadBreakout(){
 
   // create a mapping between color short code (R, O, G, Y) and color name
   const colorMap = {
-    'R': 'red',
-    'O': 'orange',
-    'G': 'green',
-    'Y': 'yellow'
+    'R': 'deeppink',
+    'O': 'purple',
+    'G': 'violet',
+    'Y': 'pink'
   };
 
   // use a 2px gap between each brick
@@ -112,7 +149,7 @@ export function loadBreakout(){
     // place the paddle horizontally in the middle of the screen
     x: canvas.width / 2 - brickWidth / 2,
     y: canvas.height-canvas.height/6,
-    width: brickWidth,
+    width: (Math.floor((canvas.width-24-28)/14)) * 2,
     height: brickHeight,
 
     // paddle x velocity
@@ -122,11 +159,11 @@ export function loadBreakout(){
   const ball = {
     x: 130,
     y: 260,
-    width: 5,
-    height: 5,
+    width: 15,
+    height: 15,
 
     // how fast the ball should go in either the x or y direction
-    speed: 2,
+    speed: 6,
 
     // ball velocity
     dx: 0,
@@ -143,7 +180,7 @@ export function loadBreakout(){
   }
 
   // game loop
-  function loop() {
+  async function loop() {
     if (isPaused()) return;
 
     id = requestAnimationFrame(loop);
@@ -182,6 +219,22 @@ export function loadBreakout(){
 
     // reset ball if it goes below the screen
     if (ball.y > canvas.height) {
+      if (score > highscore && !updatedScore) {
+        //update highscore in firebase if user exists
+        if (user) {
+          updateScoreAsync(user.uid, "breakout", score);
+          updatedScore = true;
+        }
+        highscore = score;
+
+        //update highscore in html
+        document.getElementById("highscore-board").innerHTML = (hasUser)? username + "'s High Score: " + highscore : "Guest's High Score: " + highscore; 
+      }
+
+      breakoutStartText.style.display = "block";
+
+      score = 0;
+      document.getElementById("score-board").innerHTML = "Current Score: " + score;
       ball.x = 130;
       ball.y = 260;
       ball.dx = 0;
@@ -203,8 +256,34 @@ export function loadBreakout(){
       const brick = bricks[i];
 
       if (collides(ball, brick)) {
+        //update score
+        score += 1;
+        if (score > highscore) {
+          updatedScore = false;
+        }
+
+        document.getElementById("score-board").innerHTML = "Current Score: " + score;
+
+
         // remove brick from the bricks array
         bricks.splice(i, 1);
+
+        //Reset game if all bricks are gone
+        if (bricks.length === 0) {
+          for (let row = 0; row < level1.length; row++) {
+            for (let col = 0; col < level1[row].length; col++) {
+              const colorCode = level1[row][col];
+        
+              bricks.push({
+                x: wallSize + (brickWidth + brickGap) * col,
+                y: wallSize + (brickHeight + brickGap) * row,
+                color: colorMap[colorCode],
+                width: brickWidth,
+                height: brickHeight
+              });
+            }
+          }
+        }
 
         // ball is above or below the brick, change y velocity
         // account for the balls speed since it will be inside the brick when it
@@ -234,7 +313,7 @@ export function loadBreakout(){
     });
 
     // draw paddle
-    context.fillStyle = 'cyan';
+    context.fillStyle = 'lightpink';
     context.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
   }
 
@@ -242,19 +321,26 @@ export function loadBreakout(){
   document.addEventListener('keydown', function(e) {
     // left arrow key
     if (e.which === 37) {
-      paddle.dx = -3;
+      paddle.dx = -10;
     }
     // right arrow key
     else if (e.which === 39) {
-      paddle.dx = 3;
+      paddle.dx = 10;
     }
 
     // space key
     // if they ball is not moving, we can launch the ball using the space key. ball
     // will move towards the bottom right to start
     if (ball.dx === 0 && ball.dy === 0 && e.which === 32) {
+      
+      breakoutStartText.style.display = "none";
+
       ball.dx = ball.speed;
       ball.dy = ball.speed;
+
+      //reset score
+      score = 0;
+      document.getElementById("score-board").innerHTML = "Current Score: " + score;
     }
   });
 
