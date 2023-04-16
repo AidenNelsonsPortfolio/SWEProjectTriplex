@@ -59,7 +59,7 @@ function playTetris(){
 
     var animation = game.animate([
         { left: "-1000px" },
-        { left: "40%" }
+        { left: "50%" }
       ], {
         duration: 1000,
         easing: "ease-in-out",
