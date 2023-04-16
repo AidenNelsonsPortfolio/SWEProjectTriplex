@@ -31,7 +31,7 @@ function playSnake(){
 
     var animation = game.animate([
         { left: "-1000px" },
-        { left: "50%" }
+        { left: "40%" }
       ], {
         duration: 1000,
         easing: "ease-in-out",
@@ -59,7 +59,7 @@ function playTetris(){
 
     var animation = game.animate([
         { left: "-1000px" },
-        { left: "50%" }
+        { left: "40%" }
       ], {
         duration: 1000,
         easing: "ease-in-out",
@@ -85,7 +85,7 @@ async function playBreakout(){
 
     var animation = game.animate([
         { left: "-1000px" },
-        { left: "50%" }
+        { left: "40%" }
       ], {
         duration: 1000,
         easing: "ease-in-out",
