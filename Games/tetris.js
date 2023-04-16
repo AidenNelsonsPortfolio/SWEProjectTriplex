@@ -3,6 +3,8 @@ import { isPaused, loadPauseMenu, resetPauseMenu } from "../Controllers/PauseMen
 import { loadHelpPopup } from "../Controllers/HelpPopupController.js";
 import { getCurrentUser, updateScore, getUsername, getUserScore } from "../firebase-functions.js";
 
+var guestHighScore = 0;
+
 // https://tetris.fandom.com/wiki/Tetris_Guideline
 
 // get a random integer between the range of [min,max]
@@ -41,6 +43,9 @@ export async function loadTetris(){
     //Get the user's high score from firebase
     let dbsScore = await getUserScore(user.uid, "tetris");
     highscore = (dbsScore == null) ? 0 : dbsScore;
+  }
+  else {
+    highscore = guestHighScore;
   }
 
   const scoreboard = document.getElementById("score-board");
@@ -183,8 +188,11 @@ export async function loadTetris(){
                   updateScoreAsync(user.uid, "tetris", score);
                   updatedScore = true;
                 }
+                else{
+                  guestHighScore = score;
+                }
                 highscore = score;
-        
+                
                 //update highscore in html
                 document.getElementById("highscore-board").innerHTML = (hasUser)? username + "'s High Score: " + highscore : "Guest's High Score: " + highscore; 
               }
@@ -251,7 +259,7 @@ export async function loadTetris(){
       context.textAlign = 'center';
       context.textBaseline = 'middle';
       context.fillText('Press the spacebar to restart', canvas.width / 2, canvas.height / 1.50);
-
+      
       document.addEventListener('keydown', resetGameAfterSpacebar);
     }
     
