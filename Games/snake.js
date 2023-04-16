@@ -21,7 +21,7 @@ export async function loadSnake(){
 
 
   //Load the pause menu and attach game's loop to it (to be paused) (from PauseMenuController.js)
-  loadPauseMenu(loop);
+  loadPauseMenu(snakeLoop);
 
   //Load the help popup for snake (from HelpPopupController.js)
   loadHelpPopup("snake");
@@ -119,10 +119,10 @@ export async function loadSnake(){
   }
 
   // game loop
-  async function loop() {
+  async function snakeLoop() {
     if(isPaused()) return;
 
-    id = requestAnimationFrame(loop);
+    id = requestAnimationFrame(snakeLoop);
 
     // slow game loop to 15 fps instead of 60 (60/15 = 4)
     if (++count < 4) {
@@ -253,5 +253,5 @@ export async function loadSnake(){
   });
 
   // start the game
-  let id = requestAnimationFrame(loop);
+  let id = requestAnimationFrame(snakeLoop);
 }

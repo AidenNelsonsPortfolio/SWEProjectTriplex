@@ -36,7 +36,7 @@ export async function loadBreakout(){
   loadAudio(audio);
 
   //Load the pause menu, attach game's loop to it (to be paused) (from PauseMenuController.js)
-  loadPauseMenu(loop);
+  loadPauseMenu(breakoutLoop);
 
   //Load the help popup for breakout (from HelpPopupController.js)
   loadHelpPopup("breakout");
@@ -180,10 +180,10 @@ export async function loadBreakout(){
   }
 
   // game loop
-  async function loop() {
+  async function breakoutLoop() {
     if (isPaused()) return;
 
-    id = requestAnimationFrame(loop);
+    id = requestAnimationFrame(breakoutLoop);
     context.clearRect(0,0,canvas.width,canvas.height);
 
     // move paddle by it's velocity
@@ -352,5 +352,5 @@ export async function loadBreakout(){
   });
 
   // start the game
-  let id = requestAnimationFrame(loop);
+  let id = requestAnimationFrame(breakoutLoop);
 }

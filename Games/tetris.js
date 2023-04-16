@@ -23,7 +23,7 @@ export async function loadTetris(){
   loadAudio(audio);
 
   //Load the pause menu and attach game's loop to it (to be paused) (from PauseMenuController.js)
-  loadPauseMenu(loop);
+  loadPauseMenu(tetrisLoop);
 
   //Load the help menu for tetris (from HelpPopupController.js)
   loadHelpPopup("tetris");
@@ -58,17 +58,18 @@ export async function loadTetris(){
   document.getElementById("highscore-board").innerHTML = (hasUser)? username + "'s High Score: " + highscore : "Guest's High Score: " + highscore; 
 
 
-  function resetGameAfterSpacebar(e){
+  async function resetGameAfterSpacebar(e){
     if (e.code === "Space") {
+      console.log("Resetting tetris.");
       gameOver = false;
-      loadTetris();
+      document.removeEventListener('keydown', resetGameAfterSpacebar); 
+      await loadTetris();
     }
   }
 
   //When the home button is clicked, stop the game loop, clear the canvas, stop the audio, reset the pause menu, and return to the home page
   function returnHome(){
-    document.removeEventListener('keydown', resetGameAfterSpacebar);
-
+    document.removeEventListener('keydown', resetGameAfterSpacebar); 
     //Stop game loop, clear canvas
     cancelAnimationFrame(rAF);
     context.clearRect(0,0,canvas.width,canvas.height);
@@ -260,7 +261,7 @@ export async function loadTetris(){
       context.textBaseline = 'middle';
       context.fillText('Press the spacebar to restart', canvas.width / 2, canvas.height / 1.50);
       
-      document.addEventListener('keydown', resetGameAfterSpacebar);
+      document.addEventListener('keydown', resetGameAfterSpacebar);    
     }
     
     const canvas = document.getElementById('game');
@@ -340,10 +341,10 @@ export async function loadTetris(){
     let gameOver = false;
     
     // game loop
-    async function loop() {
+    async function tetrisLoop() {
       if (isPaused()) return;
 
-      rAF = requestAnimationFrame(loop);
+      rAF = requestAnimationFrame(tetrisLoop);
       context.clearRect(0,0,canvas.width,canvas.height);
       
       // draw the playfield
@@ -426,5 +427,5 @@ export async function loadTetris(){
     });
     
     // start the game
-    rAF = requestAnimationFrame(loop);
+    rAF = requestAnimationFrame(tetrisLoop);
 }
