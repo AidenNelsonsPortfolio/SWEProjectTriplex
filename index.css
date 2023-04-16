@@ -397,10 +397,10 @@ header {
     display:none;
     
     z-index: 400;
-    font-size: 30px;
+    font-size: 27px;
     position: fixed;
     top: 45%;
-    right: 7%;
+    right: 4%;
 
     border-radius: 5px;
 
@@ -418,10 +418,10 @@ header {
     display:none;
     
     z-index: 400;
-    font-size: 30px;
+    font-size: 27px;
     position: fixed;
     top: 55%;
-    right: 7%;
+    right: 4%;
 
     border-radius: 5px;
 
