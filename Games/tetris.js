@@ -1,12 +1,18 @@
 import { loadAudio, stopAudio } from "../Controllers/AudioController.js";
 import { isPaused, loadPauseMenu, resetPauseMenu } from "../Controllers/PauseMenuController.js";
 import { loadHelpPopup } from "../Controllers/HelpPopupController.js";
+import { getCurrentUser, updateScore, getUsername, getUserScore } from "../firebase-functions.js";
+
 // https://tetris.fandom.com/wiki/Tetris_Guideline
 
 // get a random integer between the range of [min,max]
 // @see https://stackoverflow.com/a/1527820/2124254
 
-export function loadTetris(){
+async function updateScoreAsync(userId, game, score) {
+  await updateScore(userId, game, score);
+}
+
+export async function loadTetris(){
   const homeButton = document.getElementById("home-button");
   const mainContent = document.getElementById("main-content");
   
@@ -24,18 +30,40 @@ export function loadTetris(){
   var score = 0;
   var highscore = 0;
 
+  //Get the user from firebase
+  var user = await getCurrentUser();
+
+  var hasUser = user != null;
+  var username = (user != null)? await getUsername(user.uid) : null;
+  var updatedScore = false;
+
+  if (user){
+    //Get the user's high score from firebase
+    let dbsScore = await getUserScore(user.uid, "tetris");
+    highscore = (dbsScore == null) ? 0 : dbsScore;
+  }
+
   const scoreboard = document.getElementById("score-board");
   scoreboard.style.display = "block";
 
   const highscoreboard = document.getElementById("highscore-board");
   highscoreboard.style.display = "block";
 
-  document.getElementById("score-board").innerHTML = "Score: " + score; 
-  document.getElementById("highscore-board").innerHTML = "High Score: " + highscore;
+  document.getElementById("score-board").innerHTML = "Current Score: " + score; 
+  document.getElementById("highscore-board").innerHTML = (hasUser)? username + "'s High Score: " + highscore : "Guest's High Score: " + highscore; 
 
+
+  function resetGameAfterSpacebar(e){
+    if (e.code === "Space") {
+      gameOver = false;
+      loadTetris();
+    }
+  }
 
   //When the home button is clicked, stop the game loop, clear the canvas, stop the audio, reset the pause menu, and return to the home page
   function returnHome(){
+    document.removeEventListener('keydown', resetGameAfterSpacebar);
+
     //Stop game loop, clear canvas
     cancelAnimationFrame(rAF);
     context.clearRect(0,0,canvas.width,canvas.height);
@@ -149,8 +177,19 @@ export function loadTetris(){
             // game over if piece has any part offscreen
             if (tetromino.row + row < 0) {
               //reset score
+              if (score > highscore && !updatedScore) {
+                //update highscore in firebase if user exists
+                if (user) {
+                  updateScoreAsync(user.uid, "tetris", score);
+                  updatedScore = true;
+                }
+                highscore = score;
+        
+                //update highscore in html
+                document.getElementById("highscore-board").innerHTML = (hasUser)? username + "'s High Score: " + highscore : "Guest's High Score: " + highscore; 
+              }
               score = 0;
-              document.getElementById("score-board").innerHTML = "Score: " + score;
+              document.getElementById("score-board").innerHTML = "Current Score: " + score;
 
               return showGameOver();
             }
@@ -170,14 +209,12 @@ export function loadTetris(){
               playfield[r][c] = playfield[r-1][c];
             }
           }
-
           //update score
           score += 1;
           if (score > highscore) {
-            highscore = score;
+            updatedScore = false;
           }
-          document.getElementById("score-board").innerHTML = "Score: " + score;
-          document.getElementById("highscore-board").innerHTML = "High Score: " + highscore;
+          document.getElementById("score-board").innerHTML = "Current Score: " + score;
         }
         else {
           row--;
@@ -214,15 +251,8 @@ export function loadTetris(){
       context.textAlign = 'center';
       context.textBaseline = 'middle';
       context.fillText('Press the spacebar to restart', canvas.width / 2, canvas.height / 1.50);
-      document.addEventListener('keydown', function(e) {
-          if (e.which === 32) {
-            gameOver = false;
-            highscore = score; //can't figure out how to reset the game and keep the highscore from resetting
-            loadTetris();
-          }
-        
-      });
 
+      document.addEventListener('keydown', resetGameAfterSpacebar);
     }
     
     const canvas = document.getElementById('game');
@@ -287,13 +317,13 @@ export function loadTetris(){
     
     // color of each tetromino
     const colors = {
-      'I': 'cyan',
-      'O': 'yellow',
-      'T': 'purple',
-      'S': 'green',
-      'Z': 'red',
-      'J': 'blue',
-      'L': 'orange'
+      'I': 'salmon',
+      'O': 'deeppink',
+      'T': 'coral',
+      'S': 'lightpink',
+      'Z': 'violet',
+      'J': 'purple',
+      'L': 'pink'
     };
     
     let count = 0;
@@ -302,7 +332,7 @@ export function loadTetris(){
     let gameOver = false;
     
     // game loop
-    function loop() {
+    async function loop() {
       if (isPaused()) return;
 
       rAF = requestAnimationFrame(loop);

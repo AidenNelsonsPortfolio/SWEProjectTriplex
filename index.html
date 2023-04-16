@@ -36,6 +36,9 @@
             <input type="password" placeholder="Password" required id="signInPassword">
         </fieldset>
         <button id="log-in">Log In</button>
+
+        <div id="error-text-signin" style="display: none; color:red; font-size: 1.5rem;"></div>
+
         <button id="close-login-button">Close</button>
         <h3 id="sign-up">Don't have an account? - <span class="reverse-gradient-text" style="font-size: 1.5rem;">Sign Up</span></h3>
         <h4 id="google-sign-in" class="google">Or, Sign In With <span class="reverse-gradient-text" style="font-size: 1.5rem;">Google</span></h4>
@@ -57,14 +60,17 @@
         </fieldset>
         <button id="close-sign-up">Close</button>
         <button id="create-account">Create Account</button>
+
+        <div id="error-text-signup" style="display: none; color:red; font-size: 1.5rem;"></div>
+
         <h3 id="sign-in">Already have an account? - <span class="reverse-gradient-text" style="font-size: 1.5rem;">Log In</span></h3>
         <h4 id="google-sign-up" class="google">Or, Sign Up With <span class="reverse-gradient-text" style="font-size: 1.5rem;">Google</span></h4>
     </div>
     
     <div id="signout-popup">
-        <h1 class="reverse-gradient-text">Log Out of Triplex</h1>
-        <div id="sign-out-text">Sign out, <span id="personalSignOut" class="reverse-gradient-text"></span>?</div>
-        <button id="signout-button">Sign Out</button>
+        <h1 class="reverse-gradient-text" style="font-size: 2rem;">Log Out of Triplex</h1>
+        <div id="sign-out-text">Are you sure, <span id="personalSignOut" class="reverse-gradient-text"></span>?</div>
+        <button id="signout-button">Log Out</button>
         <button id="close-signout-button">Close</button>
     </div>
 
@@ -95,16 +101,16 @@
 
     <!--Score shown within each game-->
     <div id="score-board">
-        <p class="gradient-text">Score: </p>
-        
+        <p class="gradient-text">Current Score: </p>
     </div>
     <div id="highscore-board">
-        <p class="gradient-text">High Score: </p>
+        <p class="gradient-text">Guest High Score: </p>
     </div>
+
+    <div id="breakout-start-text">Press <span class="reverse-gradient-text" style="font-size: 3rem;">space key</span> to start.</div>
 
     <div id="welcomeMessage" class="welcome-message reverse-gradient-text"></div>
     <div id="blurredBackground" class="blurred-background"></div>
-
 
 
     <!--Main page html-->

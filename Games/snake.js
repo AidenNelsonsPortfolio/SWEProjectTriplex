@@ -1,8 +1,14 @@
 import { loadAudio, stopAudio } from "../Controllers/AudioController.js";
 import { isPaused, loadPauseMenu, resetPauseMenu } from "../Controllers/PauseMenuController.js";
 import { loadHelpPopup } from "../Controllers/HelpPopupController.js";
+import { getCurrentUser, getUserScore, updateScore, getUsername } from "../firebase-functions.js";
 
-export function loadSnake(){
+
+async function updateScoreAsync(userId, game, score) {
+  await updateScore(userId, game, score);
+}
+
+export async function loadSnake(){
   var canvas = document.getElementById('game');
   var context = canvas.getContext('2d');
   const homeButton = document.getElementById("home-button");
@@ -24,14 +30,28 @@ export function loadSnake(){
   var score = 0;
   var highscore = 0;
 
+  //Get the user from firebase
+  var user = await getCurrentUser();
+
+  var hasUser = user != null;
+  var username = (user != null)? await getUsername(user.uid) : null;
+  var updatedScore = false;
+
+  if (user){
+    //Get the user's high score from firebase
+    let dbsScore = await getUserScore(user.uid, "snake");
+    highscore = (dbsScore == null) ? 0 : dbsScore;
+  }
+
   const scoreboard = document.getElementById("score-board");
   scoreboard.style.display = "block";
 
   const highscoreboard = document.getElementById("highscore-board");
   highscoreboard.style.display = "block";
 
-  document.getElementById("score-board").innerHTML = "Score: " + score; 
-  document.getElementById("highscore-board").innerHTML = "High Score: " + highscore; 
+  document.getElementById("score-board").innerHTML = "Current Score: " + score; 
+  document.getElementById("highscore-board").innerHTML = (hasUser)? username + "'s High Score: " + highscore : "Guest's High Score: " + highscore; 
+
 
   //When the home button is clicked, stop the game loop, clear the canvas, stop the audio, reset the pause menu, and return to the home page
   function returnHome(){
@@ -99,7 +119,7 @@ export function loadSnake(){
   }
 
   // game loop
-  function loop() {
+  async function loop() {
     if(isPaused()) return;
 
     id = requestAnimationFrame(loop);
@@ -141,11 +161,11 @@ export function loadSnake(){
     }
 
     // draw apple
-    context.fillStyle = 'red';
+    context.fillStyle = 'orange';
     context.fillRect(apple.x, apple.y, grid-1, grid-1);
 
     // draw snake one cell at a time
-    context.fillStyle = 'green';
+    context.fillStyle = 'deeppink';
     snake.cells.forEach(function(cell, index) {
 
       // drawing 1 px smaller than the grid creates a grid effect in the snake body so you can see how long it is
@@ -156,11 +176,9 @@ export function loadSnake(){
         //update score
         score += 1;
         if (score > highscore) {
-          highscore = score;
+          updatedScore = false;
         }
-        document.getElementById("score-board").innerHTML = "Score: " + score;
-        document.getElementById("highscore-board").innerHTML = "High Score: " + highscore;
-
+        document.getElementById("score-board").innerHTML = "Current Score: " + score;
 
         snake.maxCells++;
 
@@ -184,10 +202,22 @@ export function loadSnake(){
           apple.x = getRandomInt(0, 25) * grid;
           apple.y = getRandomInt(0, 25) * grid;
 
+          //update score
+          if (score > highscore && !updatedScore) {
+            //update highscore in firebase if user exists
+            if (user) {
+              updateScoreAsync(user.uid, "snake", score);
+              updatedScore = true;
+            }
+            highscore = score;
+    
+            //update highscore in html
+            document.getElementById("highscore-board").innerHTML = (hasUser)? username + "'s High Score: " + highscore : "Guest's High Score: " + highscore; 
+          }
 
           //reset score
           score = 0;
-          document.getElementById("score-board").innerHTML = "Score: " + score;
+          document.getElementById("score-board").innerHTML = "Current Score: " + score;
         }
       }
     });

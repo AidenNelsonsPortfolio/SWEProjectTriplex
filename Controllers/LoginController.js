@@ -17,7 +17,12 @@ const signUpPopup = document.getElementById("sign-up-popup");
 const closeSignUp = document.getElementById("close-sign-up");
 const createAccount = document.getElementById("create-account");
 
+const errorTextSignin = document.getElementById("error-text-signin");
+const errorTextSignup = document.getElementById("error-text-signup");
+
+
 var currentUsername = "";
+var justSignedOut = false;
 
 //When close button clicked, hide login popup
 closeButton.addEventListener("click", () => {
@@ -29,16 +34,37 @@ closeSignoutButton.addEventListener("click", () => {
     signOutPopup.style.display = "none";
 });
 
+//Get all game-button elements, close the login popup or sign up popup if it is open, and add an event listener to each button
+const gameButtons = document.getElementsByClassName("game-button");
+for (let i = 0; i < gameButtons.length; i++) {
+    gameButtons[i].addEventListener("click", () => {
+        loginPopup.style.display = "none";
+        signUpPopup.style.display = "none";
+        signOutPopup.style.display = "none";
+    });
+}
+
+function deleteEntries() {
+    //Delete all data in form fields
+    document.getElementById("signInEmail").value = "";
+    document.getElementById("signInPassword").value = "";
+    document.getElementById("signUpEmail").value = "";
+    document.getElementById("signUpPassword").value = "";
+    document.getElementById("signUpConfirmPassword").value = "";
+    document.getElementById("signUpUsername").value = "";
+}
 
 function displaySignInPopup() {
-    console.log("Sign in popup displayed");
     loginPopup.style.display = "flex";
+    //Close the sign up popup if it is open
+    signUpPopup.style.display = "none";
 }
 
 function displaySignOutPopup() {
-    console.log("Sign out popup displayed");
     personalSignOut.textContent = "" + currentUsername;
     signOutPopup.style.display = "flex";
+    //Close the login popup if it is open
+    loginPopup.style.display = "none";
 }
 
 // Function to show the welcome message
@@ -63,17 +89,24 @@ function showWelcomeMessage(displayName) {
         blurredBackground.style.opacity = 0;
         // Hide the welcome message and unblur the background after 0.5 seconds
         setTimeout(() => {
-            blurredBackground.style.display = "none";
-            welcomeMessage.style.display = "none";
+            blurredBackground.style.visibility = "hidden";
+            welcomeMessage.style.visibility = "hidden";
         }, 500);
-    }, 2500);
+    }, 3000);
 }
 
 function showLoggedOutMessage() {
     const welcomeMessage = document.getElementById("welcomeMessage");
     const blurredBackground = document.getElementById("blurredBackground");
 
-    welcomeMessage.textContent = `Welcome to Triplex!`;
+    if(justSignedOut) {
+        welcomeMessage.textContent = "You have been signed out.";
+        justSignedOut = false;
+    }
+    else {
+        welcomeMessage.textContent = "Welcome to Triplex!";
+    }
+
 
     // Create a new line using <br> element
     const newLine = document.createElement("br");
@@ -82,7 +115,7 @@ function showLoggedOutMessage() {
     // Create a <span> element with the desired text and styles. Remove the reverse-gradient-text class
     const secondaryWelcome = document.createElement("span");
     secondaryWelcome.classList.remove("reverse-gradient-text");
-    secondaryWelcome.textContent = "Log in for tracking scores!";
+    secondaryWelcome.textContent = "Log in to track your scores!";
 
     // Override the background-related styles
     secondaryWelcome.style.fontSize = "2rem";
@@ -118,9 +151,8 @@ function showLoggedOutMessage() {
 
             blurredBackground.style.visibility = "hidden";
             welcomeMessage.style.visibility = "hidden";
-            secondaryPersonalSignOut.style.display = "none";
         }, 500);
-    }, 2500);
+    }, 3000);
 }
 
 auth.onAuthStateChanged((user) => {
@@ -133,8 +165,6 @@ auth.onAuthStateChanged((user) => {
             showWelcomeMessage(username);
             currentUsername = username;
         });
-
-        console.log("User signed in");
 
         // Add the event listener for the sign out popup
         loginButton.addEventListener("click", displaySignOutPopup);
@@ -154,11 +184,16 @@ auth.onAuthStateChanged((user) => {
         // Remove the event listener for the sign out popup
         loginButton.removeEventListener("click", displaySignOutPopup);
     }
+
+    //Simulate that someone pressed the home button
+    document.getElementById("home-button").click();
 });
 
 
 signOutButton.addEventListener("click", async () => {
     signOutPopup.style.display = "none";
+    justSignedOut = true;
+
     //Call the signOut function from firebase-functions.js
     await signOut().catch((error) => {
         alert(error.message);
@@ -173,17 +208,21 @@ logIn.addEventListener("click", (event) => {
     const password = document.getElementById("signInPassword").value;
     //Call the signInWithEmailPassword function from firebase-functions.js
     signInWithEmailPassword(email, password)
-        .then(async (user) => {
-            // Get the user's username and alert it
-            const retrievedUsername = await getUsername(user.uid);
-            alert("Signed in successfully with username: " + retrievedUsername);
-        
+        .then(() => {
             loginPopup.style.display = "none";
+            errorTextSignin.style.display = "none";
+            errorTextSignup.style.display = "none";
+            deleteEntries();
         })
         .catch((error) => {
-            alert(error.message);
-        }
-    );
+            if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                errorTextSignin.innerHTML = "Email and/or password not recognized.";
+                errorTextSignin.style.display = "block";
+                console.log("Email and/or password not recognized.");
+            } else {
+                console.log("Other error:", error.message);
+            }
+    });
 });
 
 //When sign up button is clicked, hide login popup and display sign up popup
@@ -201,11 +240,11 @@ signIn.addEventListener("click", () => {
 //When closeSignUp clicked, closes sign up popup and re-opens login popup
 closeSignUp.addEventListener("click", () => {
     signUpPopup.style.display = "none";
-    loginPopup.style.display = "flex";
+    loginPopup.style.display = "none";
 });
 
 //When createAccount clicked try to create account with firebase
-createAccount.addEventListener("click", () => {
+createAccount.addEventListener("click", async () => {
     const signUpEmail = document.getElementById("signUpEmail").value;
     const signUpPassword = document.getElementById("signUpPassword").value;
     const signUpConfirmPassword = document.getElementById("signUpConfirmPassword").value;
@@ -217,19 +256,33 @@ createAccount.addEventListener("click", () => {
         return;
     }
 
+    currentUsername = signUpUsername;
+
     //Sign up via function from firebase-functions.js
-    signUpWithEmailAndPassword(signUpEmail, signUpPassword, signUpUsername)
-        .then(async (user) => {
-            // Get the user's username and alert it
-            const retrievedUsername = await getUsername(user.uid);
-            alert("Signed in successfully with username: " + retrievedUsername);    
+    await signUpWithEmailAndPassword(signUpEmail, signUpPassword, signUpUsername)
+        .then(() => {
+            signUpPopup.style.display = "none";
+            errorTextSignin.style.display = "none";
+            errorTextSignup.style.display = "none";
+            deleteEntries();
         })
         .catch((error) => {
-            alert(error.message);
-        }
-    );
-    signUpPopup.style.display = "none";
-    loginPopup.style.display = "flex";
+            if (error.code === 'auth/email-already-in-use') {
+                errorTextSignup.innerHTML = "Email already in use.";
+                errorTextSignup.style.display = "block";
+                console.log("Email already in use.");
+            } else if (error.code === 'auth/invalid-email') {
+                errorTextSignup.innerHTML = "Invalid email.";
+                errorTextSignup.style.display = "block";
+                console.log("Invalid email.");
+            } else if (error.code === 'auth/weak-password') {
+                errorTextSignup.innerHTML = "Password must be at least 6 characters.";
+                errorTextSignup.style.display = "block";
+                console.log("Password must be at least 6 characters.");
+            } else {
+                console.log("Other error:", error.message);
+            }
+    });
 });
 
 
@@ -237,19 +290,25 @@ createAccount.addEventListener("click", () => {
 const googleSignInButtons = document.getElementsByClassName("google");
 
 for (let i = 0; i < googleSignInButtons.length; i++) {
-    googleSignInButtons[i].addEventListener("click", (event) => {
+    googleSignInButtons[i].addEventListener("click", async (event) => {
         //Prevent the default action of the button
         event.preventDefault();
         //Call the signInWithGoogle function from firebase-functions.js
-        signInWithGoogle()
-            .then(async (user) => {
-                // Get the user's username and alert it
-                const retrievedUsername = await getUsername(user.uid);
-                alert("Signed in successfully with username: " + retrievedUsername);
+        await signInWithGoogle()
+            .then(() => {
+                loginPopup.style.display = "none";
+                signUpPopup.style.display = "none";
+                errorTextSignin.style.display = "none";
+                errorTextSignup.style.display = "none";
+                deleteEntries();
             })
             .catch((error) => {
-                alert(error.message);
-            }
-        );
+                errorTextSignin.innerHTML = "Google sign in failed.";
+                errorTextSignin.style.display = "block";
+                errorTextSignup.innerHTML = "Google sign in failed.";
+                errorTextSignup.style.display = "block";
+                console.log(error.message);
+            });
+
     });
 }

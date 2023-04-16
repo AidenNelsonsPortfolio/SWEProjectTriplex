@@ -106,7 +106,7 @@ async function writeUserData(userId, email, username) {
 // Function to update a user's score for a game
 export async function updateScore(userId, game, score) {
   const scoreRef = ref(database, `scores/${userId}/${game}`);
-  await update(scoreRef, { score });
+  await set(scoreRef, score); // Use 'set' instead of 'update'
 }
 
 // Function to get the score of a user for a certain game
@@ -118,7 +118,7 @@ export async function getUserScore(userId, game) {
     if (snapshot.exists()) {
       return snapshot.val();
     } else {
-      console.log('No score data found for the user and the game');
+      console.log('No score data found for the user with game', game);
       return null;
     }
   } catch (error) {

@@ -4,10 +4,15 @@ const helpPopupText = document.getElementById("help-popup-text");
 const closeButton = document.getElementById("close-help-button");
 const homeButton = document.getElementById("home-button");
 
+const loginPopup = document.getElementById("login-popup");
+const signOutPopup = document.getElementById("signout-popup");
 
 //When help button is clicked, display the help popup
 helpButton.addEventListener("click", () => {
     helpPopup.style.display = "flex";
+    //Hide the login and sign out popups if they are open
+    loginPopup.style.display = "none";
+    signOutPopup.style.display = "none";
 });
 
 //When close button is clicked, hide the help popup

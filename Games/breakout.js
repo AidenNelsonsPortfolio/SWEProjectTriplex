@@ -1,7 +1,12 @@
 import { stopAudio, loadAudio } from "../Controllers/AudioController.js";
 import { isPaused, loadPauseMenu, resetPauseMenu } from "../Controllers/PauseMenuController.js";
 import { loadHelpPopup } from "../Controllers/HelpPopupController.js";
-import { getUserScore, getCurrentUser} from "../firebase-functions.js";
+import { getUserScore, getCurrentUser, getUsername, updateScore} from "../firebase-functions.js";
+
+
+async function updateScoreAsync(userId, game, score) {
+  await updateScore(userId, game, score);
+}
 
 export async function loadBreakout(){
   const canvas = document.getElementById('game');
@@ -10,13 +15,20 @@ export async function loadBreakout(){
   const homeButton = document.getElementById("home-button");
   const mainContent = document.getElementById("main-content");
 
+  const breakoutStartText = document.getElementById("breakout-start-text");
+  breakoutStartText.style.display = "block";
+
   //Get the user from firebase
   var user = await getCurrentUser();
   var highscore = 0;
-  
+  var hasUser = user != null;
+  var username = (user != null)? await getUsername(user.uid) : null;
+  var updatedScore = false;
+
   if (user){
     //Get the user's high score from firebase
-    highscore = await getUserScore(user.uid, "breakout");
+    let dbsScore = await getUserScore(user.uid, "breakout");
+    highscore = (dbsScore == null) ? 0 : dbsScore;
   }
 
   //Make and then load the breakout audio (from AudioController.js)
@@ -38,11 +50,8 @@ export async function loadBreakout(){
   const highscoreboard = document.getElementById("highscore-board");
   highscoreboard.style.display = "block";
 
-  document.getElementById("score-board").innerHTML = "Score: " + score; 
-  document.getElementById("highscore-board").innerHTML = "High Score: " + highscore; 
-
-
-
+  document.getElementById("score-board").innerHTML = "Current Score: " + score; 
+  document.getElementById("highscore-board").innerHTML = (hasUser)? username + "'s High Score: " + highscore : "Guest's High Score: " + highscore; 
 
   //When the home button is clicked, stop the game loop, clear the canvas, stop the audio, reset the pause menu, and return to the home page
   function returnHome(){
@@ -68,6 +77,9 @@ export async function loadBreakout(){
     mainContent.style.display="flex";
     canvas.style.display="none";
 
+    //Make start text invisible
+    breakoutStartText.style.display = "none";
+
     //Prevent multiple event listeners from being added
     homeButton.removeEventListener("click", returnHome);
   }
@@ -79,8 +91,6 @@ export async function loadBreakout(){
 
   /////////////////////////////////////////////////////////////////
   //GAME CODE STARTS HERE /////////////////////////////////////////
-
-
 
   // each row is 14 bricks long. the level consists of 3 blank rows then 8 rows
   // of 4 colors: red, orange, green, and yellow
@@ -100,10 +110,10 @@ export async function loadBreakout(){
 
   // create a mapping between color short code (R, O, G, Y) and color name
   const colorMap = {
-    'R': 'red',
-    'O': 'orange',
-    'G': 'green',
-    'Y': 'yellow'
+    'R': 'deeppink',
+    'O': 'purple',
+    'G': 'violet',
+    'Y': 'pink'
   };
 
   // use a 2px gap between each brick
@@ -170,7 +180,7 @@ export async function loadBreakout(){
   }
 
   // game loop
-  function loop() {
+  async function loop() {
     if (isPaused()) return;
 
     id = requestAnimationFrame(loop);
@@ -209,11 +219,26 @@ export async function loadBreakout(){
 
     // reset ball if it goes below the screen
     if (ball.y > canvas.height) {
+      if (score > highscore && !updatedScore) {
+        //update highscore in firebase if user exists
+        if (user) {
+          updateScoreAsync(user.uid, "breakout", score);
+          updatedScore = true;
+        }
+        highscore = score;
+
+        //update highscore in html
+        document.getElementById("highscore-board").innerHTML = (hasUser)? username + "'s High Score: " + highscore : "Guest's High Score: " + highscore; 
+      }
+
+      breakoutStartText.style.display = "block";
+
+      score = 0;
+      document.getElementById("score-board").innerHTML = "Current Score: " + score;
       ball.x = 130;
       ball.y = 260;
       ball.dx = 0;
       ball.dy = 0;
-
     }
 
     // check to see if ball collides with paddle. if they do change y velocity
@@ -234,14 +259,31 @@ export async function loadBreakout(){
         //update score
         score += 1;
         if (score > highscore) {
-          highscore = score;
+          updatedScore = false;
         }
-        document.getElementById("score-board").innerHTML = "Score: " + score;
-        document.getElementById("highscore-board").innerHTML = "High Score: " + highscore; 
+
+        document.getElementById("score-board").innerHTML = "Current Score: " + score;
 
 
         // remove brick from the bricks array
         bricks.splice(i, 1);
+
+        //Reset game if all bricks are gone
+        if (bricks.length === 0) {
+          for (let row = 0; row < level1.length; row++) {
+            for (let col = 0; col < level1[row].length; col++) {
+              const colorCode = level1[row][col];
+        
+              bricks.push({
+                x: wallSize + (brickWidth + brickGap) * col,
+                y: wallSize + (brickHeight + brickGap) * row,
+                color: colorMap[colorCode],
+                width: brickWidth,
+                height: brickHeight
+              });
+            }
+          }
+        }
 
         // ball is above or below the brick, change y velocity
         // account for the balls speed since it will be inside the brick when it
@@ -271,7 +313,7 @@ export async function loadBreakout(){
     });
 
     // draw paddle
-    context.fillStyle = 'cyan';
+    context.fillStyle = 'lightpink';
     context.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
   }
 
@@ -290,12 +332,15 @@ export async function loadBreakout(){
     // if they ball is not moving, we can launch the ball using the space key. ball
     // will move towards the bottom right to start
     if (ball.dx === 0 && ball.dy === 0 && e.which === 32) {
+      
+      breakoutStartText.style.display = "none";
+
       ball.dx = ball.speed;
       ball.dy = ball.speed;
 
       //reset score
       score = 0;
-      document.getElementById("score-board").innerHTML = "Score: " + score;
+      document.getElementById("score-board").innerHTML = "Current Score: " + score;
     }
   });
 
