@@ -227,9 +227,7 @@ logIn.addEventListener("click", (event) => {
         errorTextSignin.style.display = "block";
         return;   
     }
-    
-    console.log("The password and email fields are filled in.");
-    
+        
     //Call the signInWithEmailPassword function from firebase-functions.js
     signInWithEmailPassword(email, password)
         .then(() => {
@@ -250,6 +248,8 @@ logIn.addEventListener("click", (event) => {
                 console.log("Email has already been registered with Google account.");
             }
             else {
+                errorTextSignin.innerHTML = "Something went wrong with your email.";
+                errorTextSignin.style.display = "block";
                 console.log("Other error:", error.message);
             }
     });
@@ -318,6 +318,8 @@ createAccount.addEventListener("click", async () => {
                 errorTextSignup.style.display = "block";
                 console.log("Password must be at least 6 characters.");
             } else {
+                errorTextSignup.innerHTML = "Something went wrong. Please try again";
+                errorTextSignup.style.display = "block";
                 console.log("Other error:", error.message);
             }
     });
