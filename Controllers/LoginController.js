@@ -155,16 +155,19 @@ function showLoggedOutMessage() {
     }, 3000);
 }
 
-auth.onAuthStateChanged((user) => {
+auth.onAuthStateChanged(async (user) => {
     if (user) {
         // Close the login popup if it is open
         loginPopup.style.display = "none";
         
-        // Get the user's username and display it in the welcome message
-        getUsername(user.uid).then((username) => {
+        try {
+            // Get the user's username and display it in the welcome message
+            const username = await getUsername(user.uid);
             showWelcomeMessage(username);
             currentUsername = username;
-        });
+        } catch (error) {
+            console.error('Error getting username:', error);
+        }
 
         // Add the event listener for the sign out popup
         loginButton.addEventListener("click", displaySignOutPopup);
@@ -206,6 +209,14 @@ logIn.addEventListener("click", (event) => {
     event.preventDefault();
     const email = document.getElementById("signInEmail").value;
     const password = document.getElementById("signInPassword").value;
+    
+    //Check that all fields are filled in
+    if (email == null || email == "" || password == null || password || ""){
+        errorTextSignin.innerHTML = "Must fill in all fields.";
+        errorTextSignin.style.display = "block";
+        return;   
+    }
+    
     //Call the signInWithEmailPassword function from firebase-functions.js
     signInWithEmailPassword(email, password)
         .then(() => {
@@ -249,12 +260,22 @@ createAccount.addEventListener("click", async () => {
     const signUpPassword = document.getElementById("signUpPassword").value;
     const signUpConfirmPassword = document.getElementById("signUpConfirmPassword").value;
     const signUpUsername = document.getElementById("signUpUsername").value;
-
-    //Check if the passwords match
-    if (signUpPassword !== signUpConfirmPassword) {
-        alert("Passwords do not match");
+    
+    //Check that all fields are filled in
+    if(signUpEmail == null  || signUpEmail == "" || signUpPassword == null || signUpPassword == "" || signUpConfirmPassword == null || signUpConfirmPassword == "" || signUpUsername == null || signUpUsername == ""){
+        errorTextSignup.innerHTML = "Must fill in all fields.";
+        errorTextSignup.style.display = "block";
         return;
     }
+    
+    //Check if the passwords match
+    if (signUpPassword !== signUpConfirmPassword) {
+        errorTextSignup.innerHTML = "Passwords do not match.";
+        errorTextSignup.style.display = "block";
+        return;
+    }
+    
+    
 
     currentUsername = signUpUsername;
 
