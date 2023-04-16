@@ -163,6 +163,12 @@ auth.onAuthStateChanged(async (user) => {
         try {
             // Get the user's username and display it in the welcome message
             const username = await getUsername(user.uid);
+            while(username == null){
+                setTimeout(async () => {
+                    username = await getUsername(user.uid);
+                }, 250);
+            }
+            console.log("Welcome to Triplex,", username);
             showWelcomeMessage(username);
             currentUsername = username;
         } catch (error) {
@@ -274,8 +280,6 @@ createAccount.addEventListener("click", async () => {
         errorTextSignup.style.display = "block";
         return;
     }
-    
-    
 
     currentUsername = signUpUsername;
 
