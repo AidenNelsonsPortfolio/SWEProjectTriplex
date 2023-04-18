@@ -161,12 +161,33 @@ export async function loadSnake(){
     }
 
     // draw apple
+    // context.fillStyle = 'orange';
+    // context.fillRect(apple.x, apple.y, grid-1, grid-1);
+
+    // // draw snake one cell at a time
+    // context.fillStyle = 'deeppink';
+    // snake.cells.forEach(function(cell, index) {
+
+
+
+// draw the apple with a glow effect
+    context.shadowBlur = 20;
+    context.shadowColor = 'orange';
     context.fillStyle = 'orange';
     context.fillRect(apple.x, apple.y, grid-1, grid-1);
+    context.shadowBlur = 0;
 
-    // draw snake one cell at a time
+    // draw the snake with a glow effect
+    context.shadowBlur = 20;
+    context.shadowColor = 'deeppink';
     context.fillStyle = 'deeppink';
     snake.cells.forEach(function(cell, index) {
+        context.fillRect(cell.x, cell.y, grid-1, grid-1);
+    });
+    context.shadowBlur = 0;
+
+
+
 
       // drawing 1 px smaller than the grid creates a grid effect in the snake body so you can see how long it is
       context.fillRect(cell.x, cell.y, grid-1, grid-1);
